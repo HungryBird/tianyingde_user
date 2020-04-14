@@ -1,0 +1,22 @@
+@import './variable';
+
+@font-face{
+  font-family: "poster";
+  src: url('../assets/fonts/FZLBJW.ttf');
+}
+
+@font-face{
+  font-family: "base";
+  src: url('../assets/fonts/STKAITI.ttf');
+}
+
+*{
+  font-family: "base";
+  line-height: 1;
+}
+.number{
+  font-family: $number-font;
+}
+.poster{
+  font-family: "poster";
+}

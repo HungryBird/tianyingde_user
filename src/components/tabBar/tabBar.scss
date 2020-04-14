@@ -1,0 +1,21 @@
+.tabbar-wrap{
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  .block{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    .taro-img{
+      width: 27px;
+      height: 27px;
+    }
+    .tab-text{
+      font-size: 12px;
+    }
+  }
+}
