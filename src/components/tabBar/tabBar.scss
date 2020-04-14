@@ -1,7 +1,7 @@
 .tabbar-wrap{
   position: fixed;
   bottom: 0;
-  height: 50px;
+  height: 50PX;
   width: 100%;
   display: flex;
   .block{
@@ -11,11 +11,11 @@
     align-items: center;
     flex: 1;
     .taro-img{
-      width: 27px;
-      height: 27px;
+      width: 27PX;
+      height: 27PX;
     }
     .tab-text{
-      font-size: 12px;
+      font-size: 12PX;
     }
   }
 }
