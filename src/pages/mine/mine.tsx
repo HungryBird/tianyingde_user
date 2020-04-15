@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import TabBar from '../../components/tabBar/tabBar'
 import './mine.scss'
 
 export default class Index extends Component {
@@ -29,6 +30,7 @@ export default class Index extends Component {
     return (
       <View className='index'>
         <Text>我的</Text>
+        <TabBar active="mine" />
       </View>
     )
   }

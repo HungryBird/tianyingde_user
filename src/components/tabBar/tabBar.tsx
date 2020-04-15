@@ -36,13 +36,19 @@ const tabs = [
   }
 ]
 
-export default function TabBar({ active = 'home' }: props) {
-  return <View className="tabbar-wrap">
+export default function TabBar(props: props) {
+  function goPage(url: string) {
+    Taro.navigateTo({
+      url
+    })
+  }
+
+  return <View className='tabbar-wrap'>
     {
       tabs.map(tab => {
-        return <View className="block">
-          <Image src={tab.iconPath} />
-          <Text className={this.props.active === tab.value ? 'tab-text tab-active' : 'tab-text'}>{ tab.text }</Text>
+        return <View className='tab' onClick={goPage.bind(this, tab.pagePath)}>
+          <Image src={props.active === tab.value ? tab.selectedIconPath : tab.iconPath} mode='aspectFit' />
+          <Text className={props.active === tab.value ? 'tab-text tab-active' : 'tab-text'}>{ tab.text }</Text>
         </View>
       })
     }

@@ -1,21 +1,44 @@
+@import '../../styles/variable';
+
 .tabbar-wrap{
   position: fixed;
   bottom: 0;
   height: 50PX;
   width: 100%;
   display: flex;
-  .block{
+  background-color: $primary;
+  justify-content: space-around;
+  padding: 0 30PX;
+  .tab{
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     flex: 1;
+    &:not(:last-child) {
+      &::after{
+        content: '';
+        position: absolute;
+        height: 60%;
+        top: 50%;
+        right: -1PX;
+        transform: translateY(-50%);
+        border-left: 1PX solid rgba($color: #fff, $alpha: 0.3);
+        border-right: 1PX solid rgba($color: $inactive, $alpha: 0.3);
+      }
+    }
     .taro-img{
       width: 27PX;
       height: 27PX;
     }
     .tab-text{
       font-size: 12PX;
+      color: $inactive;
+    }
+    .tab-active{
+      font-weight: bold;
+      color: $active;
     }
   }
 }

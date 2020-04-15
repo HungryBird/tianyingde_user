@@ -1,0 +1,33 @@
+@import '../../../styles/variable';
+
+.menus-wrap{
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
+  margin: 20px 0;
+  .menu{
+    flex: 1;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-image: url('../../../assets/images/home/menus/fuwudikuangpng.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    border: 1PX solid $dark;
+    &:not(:last-child){
+      margin-right: 10px;
+    }
+    .img-wrap{
+      width: 60%;
+      .taro-img{
+        width: 100%;
+      }
+    }
+    .taro-text{
+      font-size: 20px;
+    }
+  }
+}
