@@ -1,11 +1,13 @@
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Config } from '@tarojs/taro'
+import Mixin from '../../mixins/mixin'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
-import TabBar from '../../components/tabBar/tabBar'
+import TabBar from '../../components/tabBar/TabBar'
 import Menus from './menus/menus'
 import headImg from '../../assets/images/home/head.png'
 import Logo from '../../assets/images/home/Logo.png'
 import Banner from '../../assets/images/home/bannatu.png'
 import cloud from '../../assets/images/common/xiangyun.png'
+import Yuedul from '../../assets/images/common/yuedul.png'
 import './index.scss'
 
 /**
@@ -13,7 +15,7 @@ import './index.scss'
  */
 import list from './data'
 
-export default class Index extends Component<any, any> {
+export default class Index extends Mixin {
   constructor(props) {
     super(props)
     this.state = {
@@ -44,6 +46,7 @@ export default class Index extends Component<any, any> {
         total: 0,
         size: 10,
         page: 1,
+        type: 'more',
         loading: false
       }
     }
@@ -62,26 +65,45 @@ export default class Index extends Component<any, any> {
 
   componentDidHide () { }
 
-  // 跳转
-  goPages(url: string) {
-    Taro.navigateTo({
-      url
-    })
-  }
   // 触发翻页
-  onScrollToLower(e: any) {
-    console.log('e: ', e)
+  onScrollToLower() {
     this.getList()
   }
   // 获取数据
   getList() {
+    Taro.showLoading({
+      title: '加载中',
+      mask: true
+    })
     setTimeout(() => {
       const _list = this.state.list.data.concat(list)
       const data = Object.assign({}, this.state.list, {loading: true, data: _list})
       this.setState({
         list: data
       })
+      Taro.hideLoading()
     }, 500)
+  }
+  // 点击tab
+  changeTab(tab: any) {
+    this.initList().then(() => {
+      const tabs = this.state.tabs.map((item: any) => {
+        item.active = item.value === tab.value
+        return item
+      })
+      this.setState(tabs, tabs)
+      this.getList()
+    })
+  }
+  // 看新闻
+  seeNews(id: string) {
+    const title = this.state.tabs.filter((item: any) => {
+      return item.active
+    })[0]['text']
+    this.navigateTo('/pages/index/news', {
+      id,
+      title
+    })
   }
 
   /**
@@ -138,8 +160,8 @@ export default class Index extends Component<any, any> {
             </View>
             <View className='tabs-wrap'>
               {
-                this.state.tabs.map(tab => {
-                  return <View className={`tab ${tab.active ? 'active' : ''}`} key={tab.value}>
+                this.state.tabs.map((tab: any) => {
+                  return <View className={`tab ${tab.active ? 'active' : ''}`} key={tab.value} onClick={this.changeTab.bind(this, tab)}>
                     { tab.text }
                   </View>
                 })
@@ -150,9 +172,22 @@ export default class Index extends Component<any, any> {
               lowerThreshold={threshold}
               onScrollToLower={this.onScrollToLower.bind(this)}>
               {
-                this.state.list.data.map(item => {
-                  return <View className='list'>
-                    {item.content}
+                this.state.list.data.map((item: any) => {
+                  return <View className='list' onClick={this.seeNews.bind(this, 100)}>
+                    <View className='left'>
+                      <Image src={Logo} mode='widthFix' style='width: 100%;' />
+                    </View>
+                    <View className='right'>
+                      <Text className='title'>{ item.title }</Text>
+                      <Text className='content-text'>{ item.content }</Text>
+                      <View className='bottom'>
+                        <View className='ydl'>
+                          <Image src={Yuedul} mode='widthFix' />
+                          <Text>{ item.zan }</Text>
+                        </View>
+                        <Text className='time'>{ item.time }</Text>
+                      </View>
+                    </View>
                   </View>
                 })
               }

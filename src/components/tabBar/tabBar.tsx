@@ -1,16 +1,13 @@
 import Taro from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import './tabBar.scss'
+import PropTypes from 'prop-types'
 import shouye_guan from '../../assets/images/tabBar/shouye_guan.png'
 import shouye_zhong from '../../assets/images/tabBar/shouye_zhong.png'
 import shangcheng_guan from '../../assets/images/tabBar/shangcheng_guan.png'
 import shangcheng_zhong from '../../assets/images/tabBar/shangcheng_zhong.png'
 import wode_guan from '../../assets/images/tabBar/wode_guan.png'
 import wode_zhong from '../../assets/images/tabBar/wode_zhong.png'
-
-interface props {
-  active: string
-}
 
 const tabs = [
   {
@@ -36,7 +33,7 @@ const tabs = [
   }
 ]
 
-export default function TabBar(props: props) {
+export default function TabBar(props) {
   function goPage(url: string) {
     Taro.navigateTo({
       url
@@ -53,4 +50,12 @@ export default function TabBar(props: props) {
       })
     }
   </View>
+}
+
+TabBar.PropTypes = {
+  active: PropTypes.string
+}
+
+TabBar.defaultProps = {
+  active: 'home'
 }

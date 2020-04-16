@@ -1,0 +1,32 @@
+.nav{
+  position: relative;
+  height: 40PX;
+  width: 100%;
+  background-image: url(../../assets/images/common/biaotidikuang.png);
+  background-size: 100% 100%;
+  background-position: center center;
+  .button{
+    width: 26PX;
+    height: 26PX;
+  }
+  .button--back{
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .title-wrap{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 26PX;
+    padding: 0 40px;
+    background-image: url(../../assets/images/common/erjibiaotikuang.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    line-height: 26PX;
+    font-size: 28px;
+    color: #fff;
+  }
+}

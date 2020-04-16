@@ -31,7 +31,8 @@ class App extends Component {
       'pages/index/index',
       'pages/login/login',
       'pages/mall/mall',
-      'pages/mine/mine'
+      'pages/mine/mine',
+      'pages/index/news'
     ],
     window: {
       backgroundTextStyle: 'light',
