@@ -1,7 +1,8 @@
 import Taro, { Config } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, RichText } from '@tarojs/components'
 import Nav from '../../components/nav/Nav'
 import Mixins from '../../mixins/mixin'
+import './news.scss'
 
 export default class News extends Mixins {
   constructor() {
@@ -16,10 +17,8 @@ export default class News extends Mixins {
   componentWillMount() {
     const { id, title } = this.$router.params
     this.setState({
-      navTitle: title,
+      navTitle: decodeURI(title),
       id
-    }, function() {
-      console.log('state: ', this.state)
     })
   }
 
@@ -31,6 +30,8 @@ export default class News extends Mixins {
   }
 
   render() {
+    const html = '<p>测试富文本</p>'
+
     return (
       <View className='news'>
         <Nav title={this.state.navTitle} />
@@ -38,9 +39,10 @@ export default class News extends Mixins {
           <View className='title'>
             测试标题
           </View>
-          <View className='time'>
+          <View className='time number'>
             2020-04-16
           </View>
+          <RichText className='rich-text' nodes={html} />
         </View>
       </View>
     )
