@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
-import './loadMore.scss'
+import './load-more.scss'
 import PropTypes from 'prop-types'
 
 export default function LoadMore(props) {

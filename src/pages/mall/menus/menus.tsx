@@ -13,7 +13,7 @@ import xianghuo_guan from '../../../assets/images/mall/menus/xianghuo_guan.png'
 import zhiqian_guan from '../../../assets/images/mall/menus/zhiqian_guan.png'
 import zhiqian_zhong from '../../../assets/images/mall/menus/zhiqian_zhong.png'
 
-export default function Menus() {
+export default function Menus(props: any) {
   const [menus, setMenus] = useState([
     {
       icon: guhuit_guan,
@@ -47,18 +47,20 @@ export default function Menus() {
     }
   ])
 
-  function changeMenu() {
-    // setMenus((val) => {
-      
-    // })
+  function changeMenu(item: any) {
+    setMenus(menus.map(menu => {
+      menu.active = item.text === menu.text
+      return menu
+    }))
+    props.toggleMenu()
   }
 
   return <View className='menus-wrap'>
     {
       menus.map(item => {
-        return <View key={item.icon} className='menu' onClick={changeMenu.bind(this)}>
+        return <View key={item.icon} className={`menu ${item.active ? 'active' : ''}`} onClick={changeMenu.bind(this, item)}>
           <View className='img-wrap'>
-            <Image src={item.icon} mode='widthFix' />
+            <Image src={item.active ? item.selectedIcon : item.icon} mode='widthFix' />
           </View>
           <Text>{ item.text }</Text>
         </View>

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
-import './tabBar.scss'
+import './tab-bar.scss'
 import PropTypes from 'prop-types'
 import shouye_guan from '../../assets/images/tabBar/shouye_guan.png'
 import shouye_zhong from '../../assets/images/tabBar/shouye_zhong.png'

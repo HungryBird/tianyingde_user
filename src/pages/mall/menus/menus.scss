@@ -12,6 +12,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    color: $primary;
     &:not(:last-child){
       margin-right: 10px;
     }
@@ -27,5 +28,6 @@
   }
   .menu.active{
     background-image: $linear;
+    color: #fff;
   }
 }

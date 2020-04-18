@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import TabBar from '../../components/tabBar/TabBar'
+import TabBar from '../../components/TabBar/TabBar'
 import './mine.scss'
 
 export default class Index extends Component {

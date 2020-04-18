@@ -1,9 +1,9 @@
 import Taro, { Config } from '@tarojs/taro'
 import Mixin from '../../mixins/mixin'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
-import TabBar from '../../components/tabBar/TabBar'
+import TabBar from '../../components/TabBar/TabBar'
 import Menus from './menus/menus'
-import headImg from '../../assets/images/home/head.png'
+import HeadImg from '../../assets/images/home/head.png'
 import Logo from '../../assets/images/home/Logo.png'
 import Banner from '../../assets/images/home/bannatu.png'
 import cloud from '../../assets/images/common/xiangyun.png'
@@ -139,8 +139,8 @@ export default class Index extends Mixin {
             <Text className='big poster'>清明节</Text>
           </View>
           <Image 
-            src={headImg} 
-            style='width: 100%;'
+            src={HeadImg} 
+            style='width: 100%;z-index: -1;'
             mode='widthFix' />
         </View>
         <Menus />

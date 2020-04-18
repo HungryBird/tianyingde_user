@@ -3,14 +3,21 @@ import { Component } from '@tarojs/taro'
 export default class Mixins extends Component<any, any>{
   // 跳转页面
   navigateTo(url: string, query: any = {}) {
-    let queryUrl: string = ''
-    for (const key in query) {
-      queryUrl += `${key}=${query[key]}&`
+    const type = Object.prototype.toString.call(query)
+    if (type !== '[object MouseEvent]') {
+      let queryUrl: string = ''
+      for (const key in query) {
+        queryUrl += `${key}=${query[key]}&`
+      }
+      queryUrl = queryUrl.split('').splice(0, queryUrl.length - 1).join('')
+      Taro.navigateTo({
+        url: `${url}?${queryUrl}`
+      })
+    } else {
+      Taro.navigateTo({
+        url
+      })
     }
-    queryUrl = queryUrl.split('').splice(0, queryUrl.length - 1).join('')
-    Taro.navigateTo({
-      url: `${url}?${queryUrl}`
-    })
   }
   // 初始化页面list
   initList() {

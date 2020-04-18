@@ -2,165 +2,77 @@
 @import '../../styles/variable';
 @import '../../styles/font';
 
-.index{
+.mall{
   position: relative;
   @include main-page;
   .head-wrap{
     position: relative;
-    .logo{
+    .head-bar{
       position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 35%;
-    }
-    .city-wrap{
-      position: absolute;
-      right: 20px;
-      top: 40px;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      padding: 0 40px;
+      z-index: 1;
       display: flex;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: #000;
-      .left{
-        white-space: nowrap;
-        margin-right: 10px;
-      }
-      .right{
-        background-color: $primary;
-        color: #fff;
+      justify-content: space-between;
+    }
+    .head-title{
+      z-index: 1;
+      background-image: url(../../assets/images/common/erjibiaotikuang.png);
+      background-size: 100% 100%;
+      background-position: center center;
+      padding: 20px 60px;
+      color: #fff;
+      font-size: 32px;
+    }
+    .cart{
+      width: 70px;
+      position: relative;
+      .dot{
+        background-color: $orange;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        font-size: 24px;
+        border-radius: 24px;
         text-align: center;
-        border-radius: 40px;
-        padding: 4px 23px;
-      }
-    }
-    .date-info-wrap{
-      position: absolute;
-      bottom: 60px;
-      left: 60px;
-      display: flex;
-      flex-direction: column;
-      .small{
-        font-size: 30px;
-      }
-      .big{
-        font-size: 60px;
-        font-weight: bolder;
-      }
-      .taro-text{
-        line-height: 1.3;
+        color: #fff;
+        transform: translate(-50%, -25%);
+        z-index: 1;
       }
     }
   }
   .inner{
-    padding: 0 20px;
     .content{
+      padding: 10px 0;
       position: relative;
       margin-top: 25PX;
-      padding: 70px 0 30px 0;
-      border: 1PX solid $dark;
-      background-image: url(../../assets/images/common/zhixunkuang.png);
-      background-size: cover;
-      background-position: center;
-      background-repeat: repeat;
-      border-radius: 20px;
-      .title-outter-wrap{
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        .title-inner-wrap{
-          background-color: #fff;
-          border-radius: 60px;
-          border: 1PX solid $dark;
-          .title{
-            background-image: url(../../assets/images/common/biaotidikuang.png);
-            background-size: cover;
-            background-position: center;
-            color: $yellow;
-            padding: 16px 40px;
-            border-radius: 60px;
-            margin: 2PX;
-            font-size: 32px;
-            text-shadow:  $dark 1PX 0 0, $dark 0 1PX 0, $dark -1PX 0 0, $dark 0 -1PX 0;
-          }
-        }
-        .cloud{
-          position: absolute;
-          bottom: 0;
-          width: 140px;
-        }
-        .left.cloud{
-          z-index: -2;
-          left: 0;
-          transform: rotateY(180deg) translate(60%, 40%);
-        }
-        .right.cloud{
-          transform: translate(70%, 50%);
-          right: 0;
-        }
-      }
-      .tabs-wrap{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        .tab{
-          font-size: 30px;
-          color: $primary;
-        }
-        .tab.active{
-          color: $dark;
-          font-weight: bold;
-        }
-      }
       .taro-scroll{
-        height: 200PX;
-        margin-top: 20px;
-        padding: 0 20px;
-        .list{
+        height: 1000px;
+        padding: 0 40px;
+        .list-wrap{
           display: flex;
-          justify-content: space-around;
-          align-items: center;
-          margin-bottom: 14px;
-          border: 1PX solid $grey;
-          border-radius: 20px;
-          padding: 20px;
-          box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
-          background: #fff;
-          .left{
-            width: 160px;
-            margin-right: 25px;
-          }
-          .right{
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            color: $text;
-            .title{
-              font-family: $number;
-              font-size: 30px;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          .list{
+            text-align: center;
+            box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 1px 1px;
+            background: #fff;
+            width: calc((100% - 20px)/2);
+            margin-bottom: 20px;
+            &:last-child(n+3) {
+              margin: 0;
             }
-            .content-text{
-              font-family: $number;
-              font-size: 24px;
-              text-indent: 2em;
-              padding: 10px 0;
+            .name{
+              font-size: 32px;
             }
-            .bottom{
-              display: flex;
-              justify-content: space-between;
-              font-size: 24px;
-              font-family: $number;
-              .ydl{
-                .taro-img{
-                  width: 20px;
-                  vertical-align: middle;
-                }
-              }
-              .time{
-                color: $primary;
-              }
+            .number{
+              font-size: 28px;
+              line-height: 2;
             }
           }
         }

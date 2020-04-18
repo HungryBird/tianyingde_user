@@ -3,15 +3,13 @@ import Mixin from '../../mixins/mixin'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import TabBar from '../../components/tabBar/TabBar'
 import Menus from './menus/menus'
-import headImg from '../../assets/images/mall/head.png'
-import Logo from '../../assets/images/home/Logo.png'
-import Banner from '../../assets/images/home/bannatu.png'
-import cloud from '../../assets/images/common/xiangyun.png'
-import Yuedul from '../../assets/images/common/yuedul.png'
+import HeadImg from '../../assets/images/mall/head.png'
+import CartIcon from '../../assets/images/mall/gouwuche.png'
 import './mall.scss'
+import list from './data'
 
 export default class Index extends Mixin {
-  constructor(props) {
+  constructor(props: any) {
     super(props)
     this.state = {
       tabs: [
@@ -66,27 +64,22 @@ export default class Index extends Mixin {
   }
   // 获取数据
   getList() {
-    // Taro.showLoading({
-    //   title: '加载中',
-    //   mask: true
-    // })
-    // setTimeout(() => {
-    //   const _list = this.state.list.data.concat(list)
-    //   const data = Object.assign({}, this.state.list, {loading: true, data: _list})
-    //   this.setState({
-    //     list: data
-    //   })
-    //   Taro.hideLoading()
-    // }, 500)
+    Taro.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    setTimeout(() => {
+      const _list = this.state.list.data.concat(list)
+      const data = Object.assign({}, this.state.list, {loading: true, data: _list})
+      this.setState({
+        list: data
+      })
+      Taro.hideLoading()
+    }, 500)
   }
   // 点击tab
-  changeTab(tab: any) {
+  toggleMenu() {
     this.initList().then(() => {
-      const tabs = this.state.tabs.map((item: any) => {
-        item.active = item.value === tab.value
-        return item
-      })
-      this.setState(tabs, tabs)
       this.getList()
     })
   }
@@ -116,61 +109,43 @@ export default class Index extends Mixin {
     const threshold: number = 20
 
     return (
-      <View className='index'>
+      <View className='mall'>
         <View className='head-wrap'>
+          <View className='head-bar'>
+            <Text className='head-title'>商城</Text>
+            <View className='cart' onClick={this.navigateTo.bind(this, '/pages/mall/cart')}>
+              <Text className='dot number'>
+                1
+              </Text>
+              <Image src={CartIcon} mode='widthFix' style='width: 100%;z-index: -1;' />
+            </View>
+          </View>
           <Image 
-            src={headImg} 
+            src={HeadImg} 
             style='width: 100%;'
             mode='widthFix' />
         </View>
-        <Menus />
+        <Menus toggleMenu={this.toggleMenu.bind(this)} />
         <View className='inner'>
-          <Image 
-            src={Banner} 
-            mode='widthFix' 
-            style='width: 100%;' />
           <View 
             className='content'>
-            <View className='title-outter-wrap'>
-              <View className='title-inner-wrap'>
-                <View className='title'>咨询动态</View>
-              </View>
-              <Image className='left cloud' src={cloud} mode='widthFix' />
-              <Image className='right cloud' src={cloud} mode='widthFix' />
-            </View>
-            <View className='tabs-wrap'>
-              {
-                this.state.tabs.map((tab: any) => {
-                  return <View className={`tab ${tab.active ? 'active' : ''}`} key={tab.value} onClick={this.changeTab.bind(this, tab)}>
-                    { tab.text }
-                  </View>
-                })
-              }
-            </View>
             <ScrollView
               scrollY
               lowerThreshold={threshold}
               onScrollToLower={this.onScrollToLower.bind(this)}>
-              {
-                this.state.list.data.map((item: any) => {
-                  return <View className='list' onClick={this.seeNews.bind(this, 100)}>
-                    <View className='left'>
-                      <Image src={Logo} mode='widthFix' style='width: 100%;' />
-                    </View>
-                    <View className='right'>
-                      <Text className='title'>{ item.title }</Text>
-                      <Text className='content-text'>{ item.content }</Text>
-                      <View className='bottom'>
-                        <View className='ydl'>
-                          <Image src={Yuedul} mode='widthFix' />
-                          <Text>{ item.zan }</Text>
+                <View className='list-wrap'>
+                  {
+                    this.state.list.data.map((item: any) => {
+                      return <View className='list' onClick={this.seeNews.bind(this, 100)}>
+                        <View style='width: 100%;'>
+                          <Image src={HeadImg} mode='widthFix' style='width: 100%;' />
                         </View>
-                        <Text className='time'>{ item.time }</Text>
+                        <View className='name'>{item.name}</View>
+                        <View className='number price'>￥{item.value}</View>
                       </View>
-                    </View>
-                  </View>
-                })
-              }
+                    })
+                  }
+                </View>
             </ScrollView>
           </View>
         </View>
