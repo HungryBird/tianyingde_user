@@ -1,10 +1,11 @@
 import Taro, { Config } from '@tarojs/taro'
 import { View, Text, Image, Checkbox } from '@tarojs/components'
-import Nav from '../../components/nav/Nav'
+import Nav from '../../components/Nav/Nav'
 import Mixins from '../../mixins/mixin'
 import './cart.scss'
 import _list from './data'
 import Img from '../../assets/images/mall/shangptu.png'
+import InputNumber from '../../components/InputNumber/InputNumber'
 
 export default class Cart extends Mixins {
   constructor(props: any) {
@@ -38,6 +39,7 @@ export default class Cart extends Mixins {
     }, 500)
   }
 
+  // 切换选中
   checkChange(e: any) {
     const data = this.state.list.data.map((item: any) => {
       if (item.value === e.target.value) {
@@ -51,13 +53,17 @@ export default class Cart extends Mixins {
     })
   }
 
+  // 选择数量
+  onChangeNumber(value, targe) {
+    //
+  }
+
   componentWillMount() {
     this.getList()
   }
 
   config: Config = {
-    navigationStyle: 'custom',
-    navigationBarTitleText: '购物车'
+    navigationStyle: 'custom'
   }
 
   render() {
@@ -70,7 +76,7 @@ export default class Cart extends Mixins {
               return <View className='block'>
                 <View className='top'>
                   <View className='left'>
-                    <Checkbox checked={item.checked} value={item.value} onChange={this.checkChange.bind(this)} />
+                    <Checkbox checked={item.checked} value={item.value} onChange={this.checkChange.bind(this, item)} />
                   </View>
                   <Image src={Img} mode='widthFix' />
                   <View className='right'>
@@ -79,7 +85,8 @@ export default class Cart extends Mixins {
                   </View>
                 </View>
                 <View className='bottom'>
-                  
+                  <InputNumber value={ item.value } min={0} onChangeNumber={(value) => this.onChangeNumber(value, item)} />
+                  <Text className='number price'>￥{ item.value }</Text>
                 </View>
               </View>
             })

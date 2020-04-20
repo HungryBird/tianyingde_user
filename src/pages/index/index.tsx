@@ -9,6 +9,7 @@ import Banner from '../../assets/images/home/bannatu.png'
 import cloud from '../../assets/images/common/xiangyun.png'
 import Yuedul from '../../assets/images/common/yuedul.png'
 import './index.scss'
+import { articles } from '../../api/index/list'
 
 /**
  * 模拟数据
@@ -74,6 +75,16 @@ export default class Index extends Mixin {
     Taro.showLoading({
       title: '加载中',
       mask: true
+    })
+    const category = this.state.tabs.filter((item: any) => {
+      return item.active
+    })[0].value
+    articles({
+      category,
+      page: this.state.list.page,
+      size: this.state.list.size
+    }).then((res: any) => {
+      console.log('res: ', res)
     })
     setTimeout(() => {
       const _list = this.state.list.data.concat(list)

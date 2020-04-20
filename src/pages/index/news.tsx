@@ -1,6 +1,6 @@
 import Taro, { Config } from '@tarojs/taro'
 import { View, RichText } from '@tarojs/components'
-import Nav from '../../components/nav/Nav'
+import Nav from '../../components/Nav/Nav'
 import Mixins from '../../mixins/mixin'
 import './news.scss'
 

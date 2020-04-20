@@ -1,7 +1,7 @@
 import Taro, { Config } from '@tarojs/taro'
 import Mixin from '../../mixins/mixin'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
-import TabBar from '../../components/tabBar/TabBar'
+import TabBar from '../../components/TabBar/TabBar'
 import Menus from './menus/menus'
 import HeadImg from '../../assets/images/mall/head.png'
 import CartIcon from '../../assets/images/mall/gouwuche.png'
@@ -102,7 +102,7 @@ export default class Index extends Mixin {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '商城'
   }
 
   render () {
