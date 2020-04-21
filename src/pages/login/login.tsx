@@ -8,7 +8,7 @@ import './login.scss'
 
 @inject('infoStore')
 @observer
-export default class Index extends Component {
+export default class Index extends Component<any, any> {
   constructor(props: any) {
     super(props)
   }

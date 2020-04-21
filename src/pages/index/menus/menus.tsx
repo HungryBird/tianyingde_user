@@ -37,7 +37,7 @@ export default function Menus() {
     })
   }
 
-  return <View className='menus-wrap'>
+  return <View className='index-menus-wrap'>
     {
       menus.map(item => {
         return <View key={item.path} className='menu' onClick={goPage.bind(this, item.path)}>

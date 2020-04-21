@@ -14,10 +14,10 @@ import { articles } from '../../api/index/list'
 /**
  * 模拟数据
  */
-import list from './data'
+// import list from './data'
 
 export default class Index extends Mixin {
-  constructor(props) {
+  constructor(props: any) {
     super(props)
     this.state = {
       tabs: [
@@ -72,6 +72,7 @@ export default class Index extends Mixin {
   }
   // 获取数据
   getList() {
+    if (this.state.list.type !== 'more') return
     Taro.showLoading({
       title: '加载中',
       mask: true
@@ -84,16 +85,8 @@ export default class Index extends Mixin {
       page: this.state.list.page,
       size: this.state.list.size
     }).then((res: any) => {
-      console.log('res: ', res)
+      this.handleDefaultList(res)
     })
-    setTimeout(() => {
-      const _list = this.state.list.data.concat(list)
-      const data = Object.assign({}, this.state.list, {loading: true, data: _list})
-      this.setState({
-        list: data
-      })
-      Taro.hideLoading()
-    }, 500)
   }
   // 点击tab
   changeTab(tab: any) {
@@ -111,7 +104,7 @@ export default class Index extends Mixin {
     const title = this.state.tabs.filter((item: any) => {
       return item.active
     })[0]['text']
-    this.navigateTo('/pages/index/news', {
+    this.navigateTo('/pages/news/news', {
       id,
       title
     })
@@ -184,9 +177,9 @@ export default class Index extends Mixin {
               onScrollToLower={this.onScrollToLower.bind(this)}>
               {
                 this.state.list.data.map((item: any) => {
-                  return <View className='list' onClick={this.seeNews.bind(this, 100)}>
+                  return <View className='list' onClick={this.seeNews.bind(this, item.id)}>
                     <View className='left'>
-                      <Image src={Logo} mode='widthFix' style='width: 100%;' />
+                      <Image src={ item.images } mode='widthFix' style='width: 100%;' />
                     </View>
                     <View className='right'>
                       <Text className='title'>{ item.title }</Text>
@@ -194,9 +187,9 @@ export default class Index extends Mixin {
                       <View className='bottom'>
                         <View className='ydl'>
                           <Image src={Yuedul} mode='widthFix' />
-                          <Text>{ item.zan }</Text>
+                          <Text>{ item.pageviews }</Text>
                         </View>
-                        <Text className='time'>{ item.time }</Text>
+                        <Text className='time'>{ item.updated_at }</Text>
                       </View>
                     </View>
                   </View>

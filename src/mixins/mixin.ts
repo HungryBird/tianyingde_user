@@ -36,4 +36,18 @@ export default class Mixins extends Component<any, any>{
       resolve()
     })
   }
+  // 处理获取的列表数据
+  handleDefaultList(res: any) {
+    const data = this.state.list.data.concat(res.data)
+    const list = Object.assign({}, this.state.list, {
+      data,
+      page: this.state.list.page + 1,
+      total: res.meta.page_info.total,
+      type: this.state.list.data.length === this.state.list.total ? 'noMore' : 'more'
+    })
+    this.setState({
+      list
+    })
+    Taro.hideLoading()
+  }
 }

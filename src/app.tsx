@@ -38,8 +38,9 @@ class App extends Component {
       'pages/index/index',
       'pages/mall/mall',
       'pages/mine/mine',
-      'pages/index/news',
-      'pages/mall/cart'
+      'pages/news/news',
+      'pages/cart/cart',
+      'pages/good/good'
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -1,0 +1,25 @@
+@import '../../styles/variable';
+
+.button{
+  padding: 20px 60px;
+  font-size: 32px;
+}
+.button.button--medium{
+  padding: 20px 60px;
+  font-size: 30px;
+}
+.button.button--small{
+  padding: 18px 50px;
+  font-size: 28px;
+}
+.button.button--mini{
+  padding: 16px 40px;
+  font-size: 26px;
+}
+.button.button--primary{
+  color: #fff;
+  background-image: $linear-btn;
+}
+.button.is-round{
+  border-radius: 40px;
+}

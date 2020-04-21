@@ -46,16 +46,30 @@
       }
       .bottom{
         flex: 1;
-        margin: 10px;
+        margin: 10px 10px 0 10px;
         border-top: 1PX solid $primary;
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
         font-size: 30px;
+        line-height: 1.5;
+        padding: 10px 20px;
+        .number{
+          padding-right: 40px;
+        }
       }
     }
   }
-  .bottom{
-    
+  .bottom--fixed{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    border-top: 1PX solid #ececec;
+    .right{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 }

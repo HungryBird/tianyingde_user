@@ -6,6 +6,7 @@ import Menus from './menus/menus'
 import HeadImg from '../../assets/images/mall/head.png'
 import CartIcon from '../../assets/images/mall/gouwuche.png'
 import './mall.scss'
+import { goods } from '../../api/mall/mall'
 import list from './data'
 
 export default class Index extends Mixin {
@@ -68,14 +69,9 @@ export default class Index extends Mixin {
       title: '加载中',
       mask: true
     })
-    setTimeout(() => {
-      const _list = this.state.list.data.concat(list)
-      const data = Object.assign({}, this.state.list, {loading: true, data: _list})
-      this.setState({
-        list: data
-      })
-      Taro.hideLoading()
-    }, 500)
+    goods({}).then((res: any) => {
+      this.handleDefaultList(res)
+    })
   }
   // 点击tab
   toggleMenu() {
@@ -84,13 +80,9 @@ export default class Index extends Mixin {
     })
   }
   // 看新闻
-  seeNews(id: string) {
-    const title = this.state.tabs.filter((item: any) => {
-      return item.active
-    })[0]['text']
-    this.navigateTo('/pages/index/news', {
-      id,
-      title
+  seeGood(id: string) {
+    this.navigateTo('/pages/good/good', {
+      id
     })
   }
 
@@ -113,7 +105,7 @@ export default class Index extends Mixin {
         <View className='head-wrap'>
           <View className='head-bar'>
             <Text className='head-title'>商城</Text>
-            <View className='cart' onClick={this.navigateTo.bind(this, '/pages/mall/cart')}>
+            <View className='cart' onClick={this.navigateTo.bind(this, '/pages/cart/cart')}>
               <Text className='dot number'>
                 1
               </Text>
@@ -136,12 +128,12 @@ export default class Index extends Mixin {
                 <View className='list-wrap'>
                   {
                     this.state.list.data.map((item: any) => {
-                      return <View className='list' onClick={this.seeNews.bind(this, 100)}>
+                      return <View className='list' onClick={this.seeGood.bind(this, item.id)}>
                         <View style='width: 100%;'>
-                          <Image src={HeadImg} mode='widthFix' style='width: 100%;' />
+                          <Image src={item.image} mode='widthFix' style='width: 100%;' />
                         </View>
-                        <View className='name'>{item.name}</View>
-                        <View className='number price'>￥{item.value}</View>
+                        <View className='name'>{item.goods_name}</View>
+                        <View className='number price'>￥{item.sell_price}</View>
                       </View>
                     })
                   }
