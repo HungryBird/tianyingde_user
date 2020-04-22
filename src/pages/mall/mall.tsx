@@ -4,10 +4,9 @@ import { View, Text, Image, ScrollView } from '@tarojs/components'
 import TabBar from '../../components/TabBar/TabBar'
 import Menus from './menus/menus'
 import HeadImg from '../../assets/images/mall/head.png'
-import CartIcon from '../../assets/images/mall/gouwuche.png'
+import CartIcon from '../../components/CartIcon/CartIcon'
 import './mall.scss'
 import { goods } from '../../api/mall/mall'
-import list from './data'
 
 export default class Index extends Mixin {
   constructor(props: any) {
@@ -105,12 +104,7 @@ export default class Index extends Mixin {
         <View className='head-wrap'>
           <View className='head-bar'>
             <Text className='head-title'>商城</Text>
-            <View className='cart' onClick={this.navigateTo.bind(this, '/pages/cart/cart')}>
-              <Text className='dot number'>
-                1
-              </Text>
-              <Image src={CartIcon} mode='widthFix' style='width: 100%;z-index: -1;' />
-            </View>
+            <CartIcon />
           </View>
           <Image 
             src={HeadImg} 

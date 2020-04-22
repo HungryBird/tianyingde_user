@@ -18,6 +18,7 @@ export default class Index extends Component<any, any> {
       title: ''
     })
     const { infoStore } = this.props
+    console.log('infoStore.token: ', infoStore.token)
     if (isEmpty(infoStore.token)) {
       this.toLogin()
     } else {
@@ -48,9 +49,11 @@ export default class Index extends Component<any, any> {
     }).then((res: any) => {
       infoStore.setToken(res.meta.access_token).then(() => {
         Taro.hideLoading()
-        Taro.navigateTo({
-          url: '/pages/index/index'
-        })
+        // 刷新页面之后getStorageSync才能取到值
+        window.location.reload()
+        // Taro.navigateTo({
+        //   url: '/pages/index/index'
+        // })
       })
     })
   }

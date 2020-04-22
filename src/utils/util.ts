@@ -17,7 +17,7 @@ export const setStorage = (key: string, data: any) => {
       key,
       data,
       success() {
-        resolve()
+        resolve(data)
       }
     })
   })

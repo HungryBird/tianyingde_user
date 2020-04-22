@@ -3,6 +3,10 @@
 .button{
   padding: 20px 60px;
   font-size: 32px;
+  text-align: center;
+}
+.button.button--default{
+  background-color: $btn-base-color;
 }
 .button.button--medium{
   padding: 20px 60px;
@@ -16,7 +20,7 @@
   padding: 16px 40px;
   font-size: 26px;
 }
-.button.button--primary{
+.button.button--buy{
   color: #fff;
   background-image: $linear-btn;
 }

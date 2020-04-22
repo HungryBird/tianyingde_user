@@ -10,9 +10,9 @@ export default function Nav() {
   }
 
   return <View className='nav'>
-    <Image src={Back} mode='widthFix' className='button button--back' onClick={goBack} />
+    <Image src={Back} mode='widthFix' className='nav-icon nav-icon--back' onClick={goBack} />
     <View className='title-wrap'>
-      { this.props.title }
+      <Text>{ this.props.title }</Text>
     </View>
   </View>
 }

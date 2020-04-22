@@ -27,3 +27,7 @@ export const deleteOrder = (id: string) => {
 export const carts = () => {
   return http('/consumer/carts', 'GET')
 }
+
+export const addToCart = (data: any) => {
+  return http('/consumer/carts', 'POST', data)
+}
