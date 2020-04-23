@@ -1,0 +1,83 @@
+@import '../../styles/variable';
+
+.mine{
+  .main{
+    display: flex;
+    flex-direction: column;
+    .header{
+      position: relative;
+      padding: 40px 0 0 0;
+      background-image: url(../../assets/images/common/biaotidikuang.png);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+      .top{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .shezhi{
+          width: 60px;
+          .taro-img{
+            width: 100%;
+          }
+        }
+        .portrait{
+          width: 140px;
+          height: 140px;
+          border-radius: 100%;
+          overflow: hidden;
+          border: 1PX solid $yellow;
+        }
+        .username{
+          color: #fff;
+          font-size: 32px;
+          line-height: 2;
+        }
+      }
+      .bottom{
+        display: flex;
+        justify-content: space-between;
+        background-color: rgba(255, 255, 255, 0.3);
+        .btn{
+          position: relative;
+          padding: 20px;
+          flex: 1;
+          text-align: center;
+          .btn__slot{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .price{
+              color: $yellow;
+            }
+            .taro-img{
+              width: 60px;
+            }
+            .text{
+              color: #fff;
+              font-size: 28px;
+              margin: 0 10px;
+            }
+            .t.text{
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+    .content{
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+      padding: 30px;
+      .bg-img{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 480px;
+      }
+    }
+  }
+}

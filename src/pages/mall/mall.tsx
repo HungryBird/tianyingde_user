@@ -6,7 +6,7 @@ import Menus from './menus/menus'
 import HeadImg from '../../assets/images/mall/head.png'
 import CartIcon from '../../components/CartIcon/CartIcon'
 import './mall.scss'
-import { goods } from '../../api/mall/mall'
+import { goods, carts } from '../../api/mall/mall'
 
 export default class Index extends Mixin {
   constructor(props: any) {
@@ -34,6 +34,7 @@ export default class Index extends Mixin {
           active: false
         }
       ],
+      carts: 0,
       list: {
         data: [],
         total: 0,
@@ -50,6 +51,8 @@ export default class Index extends Mixin {
   componentDidMount () { 
     // 获取列表数据
     this.getList()
+    // 获取购物车数据
+    this.carts()
   }
 
   componentWillUnmount () { }
@@ -64,10 +67,6 @@ export default class Index extends Mixin {
   }
   // 获取数据
   getList() {
-    Taro.showLoading({
-      title: '加载中',
-      mask: true
-    })
     goods({}).then((res: any) => {
       this.handleDefaultList(res)
     })
@@ -82,6 +81,15 @@ export default class Index extends Mixin {
   seeGood(id: string) {
     this.navigateTo('/pages/good/good', {
       id
+    })
+  }
+  // 获取购物车
+  carts() {
+    carts().then((res: any) => {
+      const carts = res.meta.page_info.total
+      this.setState({
+        carts
+      })
     })
   }
 
@@ -104,7 +112,7 @@ export default class Index extends Mixin {
         <View className='head-wrap'>
           <View className='head-bar'>
             <Text className='head-title'>商城</Text>
-            <CartIcon />
+            <CartIcon number={this.state.carts} />
           </View>
           <Image 
             src={HeadImg} 

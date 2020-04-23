@@ -3,6 +3,7 @@ import { Component } from '@tarojs/taro'
 export default class Mixins extends Component<any, any>{
   // 跳转页面
   navigateTo(url: string, query: any = {}) {
+    console.log('query: ', query)
     const type = Object.prototype.toString.call(query)
     if (type !== '[object MouseEvent]') {
       let queryUrl: string = ''
@@ -38,16 +39,19 @@ export default class Mixins extends Component<any, any>{
   }
   // 处理获取的列表数据
   handleDefaultList(res: any) {
-    const data = this.state.list.data.concat(res.data)
-    const list = Object.assign({}, this.state.list, {
-      data,
-      page: this.state.list.page + 1,
-      total: res.meta.page_info.total,
-      type: this.state.list.data.length === this.state.list.total ? 'noMore' : 'more'
+    return new Promise((resolve: any) => {
+      const data = this.state.list.data.concat(res.data)
+      const list = Object.assign({}, this.state.list, {
+        data,
+        page: this.state.list.page + 1,
+        total: res.meta.page_info.total,
+        type: this.state.list.data.length === this.state.list.total ? 'noMore' : 'more'
+      })
+      this.setState({
+        list
+      }, () => {
+        resolve()
+      })
     })
-    this.setState({
-      list
-    })
-    Taro.hideLoading()
   }
 }

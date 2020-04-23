@@ -2,16 +2,18 @@ import Taro, { Config } from '@tarojs/taro'
 import { View, Text, Image, Checkbox } from '@tarojs/components'
 import Nav from '../../components/Nav/Nav'
 import Mixins from '../../mixins/mixin'
-import './cart.scss'
+import './createOrder.scss'
+import Img from '../../assets/images/mall/shangptu.png'
 import InputNumber from '../../components/InputNumber/InputNumber'
 import Button from '../../components/Button/button'
 import { carts } from '../../api/mall/mall'
+import { isEmpty } from '../../utils/util'
 
 export default class Cart extends Mixins {
   constructor(props: any) {
     super(props)
     this.state = {
-      allChecked: true,
+      totalNumber: 0,
       total: 0,
       list: {
         data: [],
@@ -24,18 +26,6 @@ export default class Cart extends Mixins {
     }
   }
 
-  getList() {
-    carts().then((res: any) => {
-      res.data = res.data.map((item: any) => {
-        item.checked = true
-        return item
-      })
-      this.handleDefaultList(res).then(() => {
-        this.calcTotal()
-      })
-    })
-  }
-
   // 切换选中
   checkChange(row: any) {
     const data = this.state.list.data.map((item: any) => {
@@ -44,28 +34,12 @@ export default class Cart extends Mixins {
       }
       return item
     })
-    const allChecked = data.every((item: any) => {
-      return item.checked
-    })
+
     const list = Object.assign({}, this.state.list, {data})
     this.setState({
-      list,
-      allChecked
-    })
-  }
-
-  // 切换选择全部
-  checkAll(val: boolean) {
-    const allChecked = !val
-    const data = this.state.list.data.map((item: any) => {
-      item.checked = allChecked
-      return item
-    })
-    this.setState({
-      list: {
-        data
-      },
-      allChecked
+      list
+    }, function() {
+      this.calcTotal()
     })
   }
 
@@ -83,23 +57,27 @@ export default class Cart extends Mixins {
     })
   }
 
-  // 计算总价
+  // 计算总价和总件
   calcTotal() {
     const arr = this.state.list.data.filter((item: any) => {
       return item.checked
     })
     if (arr.length > 0) {
+      let totalNumber = 0
       const total = arr.map((item: any) => {
+        totalNumber += item.num
         return item.goods.sell_price * item.num
       }).reduce((total: number, price: number) => {
         return total + price
       })
       this.setState({
-        total
+        total,
+        totalNumber
       })
     } else {
       this.setState({
-        total: 0
+        total: 0,
+        totalNumber: 0
       })
     }
   }
@@ -116,23 +94,32 @@ export default class Cart extends Mixins {
       })
       return
     }
-    const goods = JSON.stringify(arr)
-    this.navigateTo('/pages/createOrder/createOrder', { goods })
+    this.navigateTo('/pages/createOrder/createOrder', arr)
   }
 
   componentWillMount() {
-    this.getList()
+    const { id, ids } = this.$router.params
+    if (!isEmpty(id)) {
+      const str = decodeURI(id)
+      const good = JSON.parse(str)
+      this.setState
+    } else if (!isEmpty(ids)) {
+      const str = decodeURI(ids)
+      const goods = JSON.parse(str)
+      
+      console.log('ids: ', JSON.parse(JSON.parse(decodeURI(ids))))
+    }
   }
 
   config: Config = {
     navigationStyle: 'custom',
-    navigationBarTitleText: '购物车'
+    navigationBarTitleText: '确认订单'
   }
 
   render() {
     return(
       <View className='cart'>
-        <Nav title='购物车' />
+        <Nav title='确认订单' />
         <View className='content'>
           {
             this.state.list.data.length !== 0 ?
@@ -142,7 +129,7 @@ export default class Cart extends Mixins {
                   <View className='left'>
                     <Checkbox checked={item.checked} value={item.id} onChange={this.checkChange.bind(this, item)} />
                   </View>
-                  <Image src={item.goods.image} mode='widthFix' />
+                  <Image src={Img} mode='widthFix' />
                   <View className='right'>
                     <View className='name'>{ item.goods.goods_name }</View>
                     <View className='sub yahei'>{ item.goods.detail }</View>
@@ -159,9 +146,7 @@ export default class Cart extends Mixins {
         </View>
         <View className='bottom--fixed'>
           <View className='left'>
-            <Checkbox checked={this.state.allChecked} value='all' onChange={this.checkAll.bind(this, this.state.allChecked)} >
-              全选
-            </Checkbox>
+            <Text>共{this.state.totalNumber}件</Text>
           </View>
           <View className='right'>
             <Text style='margin-right: 20px;' className='bold'>
@@ -170,7 +155,7 @@ export default class Cart extends Mixins {
                 ￥{ this.state.total }
               </Text>
             </Text>
-            <Button text='结算' type='buy' onClick={this.settle.bind(this)} round />
+            <Button text='提交订单' type='buy' onClick={this.settle.bind(this)} round />
           </View>
         </View>
       </View>

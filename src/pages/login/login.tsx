@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { isEmpty } from '../../utils/util'
+import { isEmpty, getStorageSync } from '../../utils/util'
 import { inject, observer } from '@tarojs/mobx'
 import { login } from '../../api/login/login'
 import './login.scss'
@@ -22,6 +22,8 @@ export default class Index extends Component<any, any> {
     if (isEmpty(infoStore.token)) {
       this.toLogin()
     } else {
+      console.log('getStorageSync: ', getStorageSync('token'))
+      debugger
       setTimeout(() => {
         Taro.hideLoading()
         Taro.navigateTo({
@@ -49,11 +51,9 @@ export default class Index extends Component<any, any> {
     }).then((res: any) => {
       infoStore.setToken(res.meta.access_token).then(() => {
         Taro.hideLoading()
-        // 刷新页面之后getStorageSync才能取到值
-        window.location.reload()
-        // Taro.navigateTo({
-        //   url: '/pages/index/index'
-        // })
+        Taro.navigateTo({
+          url: '/pages/index/index'
+        })
       })
     })
   }

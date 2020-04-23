@@ -40,7 +40,8 @@ class App extends Component {
       'pages/mine/mine',
       'pages/news/news',
       'pages/cart/cart',
-      'pages/good/good'
+      'pages/good/good',
+      'pages/createOrder/createOrder'
     ],
     window: {
       backgroundTextStyle: 'light',

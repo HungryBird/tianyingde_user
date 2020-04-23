@@ -2,14 +2,19 @@ import Taro from '@tarojs/taro'
 import { getStorageSync, isEmpty, clearStorageSync } from '../utils/util'
 
 export default function request(url: string, method: string | any = 'GET', data: any = {}, contentType: string = 'application/x-www-form-urlencoded') {
-  console.log('url: ', url, 'method: ', method, 'data: ', data)
-  const baseURL = process.env.NODE_ENV === 'development' ? 'http://tyd.jongjun.cn/api' : 'http://tyd.jongjun.cn/api'
+  const baseURL = process.env.NODE_ENV === 'development' ? 'http://api.jiayoufabao.com/api' : 'http://tyd.jongjun.cn/api'
+
+  const getToken = () => {
+    return getStorageSync('token')
+  }
+
   return new Promise((resolve: any, reject: any) => {
     try{
       Taro.showLoading({
         title: '加载中...'
       })
-      const token = getStorageSync('token')
+      const token = getToken()
+      console.log('request token: ', token)
       Taro.request({
         url: `${baseURL}${url}`,
         method,

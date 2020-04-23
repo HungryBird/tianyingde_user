@@ -4,7 +4,6 @@ import propTypes from 'prop-types'
 import './input-number.scss'
 
 export default function InputNumber(props: any) {
-  console.log('input number props: ', props)
   const [value, setValue] = useState(props.value)
   const [min] = useState(props.min)
   const [max] = useState(props.max)

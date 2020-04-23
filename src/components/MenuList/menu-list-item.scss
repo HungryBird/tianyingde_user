@@ -1,0 +1,28 @@
+@import '../../styles/variable';
+
+.menu-list-item{
+  display: flex;
+  padding: 20px 50px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1PX solid $grey;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  .left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 36px;
+    color: $primary;
+    .taro-img{
+      width: 50px;
+      margin-right: 20px;
+    }
+  }
+  .right{
+    width: 50px;
+    .taro-img{
+      width: 100%;
+    }
+  }
+}

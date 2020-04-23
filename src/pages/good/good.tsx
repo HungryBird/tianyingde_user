@@ -26,7 +26,7 @@ export default class Good extends Mixins {
         visible: false,
         form: {
           goods_id: '',
-          number: 1,
+          num: 1,
           address_id: ''
         }
       },
@@ -50,8 +50,6 @@ export default class Good extends Mixins {
     })
     this.setState({
       buy
-    }, function() {
-      console.log('af buy: ', this.state.buy)
     })
     this.getGoodInfo(id)
     this.getAddresses()
@@ -140,16 +138,14 @@ export default class Good extends Mixins {
 
   // 确认购买
   confirm() {
-    addOrder(this.state.buy.form).then((res: any) => {
-      
+    this.navigateTo('/pages/createOrder/createOrder', {
+      id: JSON.stringify(this.state.content)
     })
   }
 
   // 加入到购物车
   addCart() {
-    addToCart(this.state.buy.form).then((res: any) => {
-      console.log('res: ', res)
-    })
+    addToCart(this.state.buy.form)
   }
 
   render() {
@@ -223,7 +219,7 @@ export default class Good extends Mixins {
                   <View className='label'>
                     购买数量
                   </View>
-                  <InputNumber min={1} value={this.state.buy.form.number} onChangeNumber={this.changeNumber.bind(this)} />
+                  <InputNumber min={1} value={this.state.buy.form.num} onChangeNumber={this.changeNumber.bind(this)} />
                 </View>
                 <Button text='确定' type='buy' round onClick={this.confirm.bind(this)} />
               </View>

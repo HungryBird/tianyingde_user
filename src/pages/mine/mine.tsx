@@ -1,9 +1,28 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import Taro, { Config } from '@tarojs/taro'
+import Mixins from '../../mixins/mixin'
+import { View, Text, Image } from '@tarojs/components'
 import TabBar from '../../components/TabBar/TabBar'
 import './mine.scss'
+import ShezhiIcon from '../../assets/images/mine/shezhi.png'
+import QianbaoIcon from '../../assets/images/mine/qianbao.png'
+import bgImg from '../../assets/images/mine/ditubeij.png'
+import MenuListItem from '../../components/MenuList/MenuListItem'
+import Icon1 from '../../assets/images/mine/chaxun.png'
+import Icon2 from '../../assets/images/mine/fuwudingdan.png'
+import Icon3 from '../../assets/images/mine/shangpdingdan.png'
+import Icon4 from '../../assets/images/mine/lianxikefu.png'
 
-export default class Index extends Component {
+export default class Index extends Mixins {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      user: {
+        portrait: '',
+        name: '测试用的名字',
+        money: 0
+      }
+    }
+  }
 
   componentWillMount () { }
 
@@ -27,10 +46,68 @@ export default class Index extends Component {
   }
 
   render () {
+    const menus = [
+      {
+        label: '讣告查询',
+        path: '/pages/fugao/chaxun',
+        icon: Icon1
+      },
+      {
+        label: '服务订单',
+        path: '/pages/fugao/chaxun',
+        icon: Icon2
+      },
+      {
+        label: '商品订单',
+        path: '/pages/fugao/chaxun',
+        icon: Icon3
+      },
+      {
+        label: '联系客服',
+        path: '/pages/fugao/chaxun',
+        icon: Icon4
+      }
+    ]
+
     return (
-      <View className='index'>
-        <Text>我的</Text>
-        <TabBar active="mine" />
+      <View className='page-main mine'>
+        <View className='main'>
+          <View className='header'>
+            <View className='top'>
+              <View className='page-title page-title--position left'>
+                个人中心
+              </View>
+              <View className='icon page-title--position right shezhi'>
+                <Image src={ShezhiIcon} mode='widthFix' />
+              </View>
+              <Image mode='widthFix' src={this.state.user.portrait} className='portrait' />
+              <Text className='username'>{ this.state.user.name }</Text>
+            </View>
+            <View className='bottom'>
+              <View className='btn separator'>
+                <View className='btn__slot'>
+                  <Image mode='widthFix' src={QianbaoIcon} />
+                  <View className='text'>钱包</View>
+                </View>
+              </View>
+              <View className='btn separator'>
+                <View className='btn__slot'>
+                  <View className='text t'>余额</View>
+                  <View className='price number'>1000</View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View className='content'>
+            {
+              menus.map((item: any) => {
+                return <MenuListItem path={item.path} label={item.label} icon={item.icon} />
+              })
+            }
+            <Image mode='widthFix' src={bgImg} className='bg-img' />
+          </View>
+          <TabBar active="mine" />
+        </View>
       </View>
     )
   }
