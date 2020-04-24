@@ -41,7 +41,8 @@ class App extends Component {
       'pages/news/news',
       'pages/cart/cart',
       'pages/good/good',
-      'pages/createOrder/createOrder'
+      'pages/createOrder/createOrder',
+      'pages/address/address'
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -5,6 +5,7 @@ const infoStore = observable({
   token: getStorageSync('token'),
   setToken(token: string) {
     return new Promise((resolve: any) => {
+      console.log('store set token：', token)
       setStorageSync('token', token)
       resolve()
     })

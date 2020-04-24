@@ -9,6 +9,22 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  .address-wrap{
+    padding: 20px;
+    .label{
+      display: inline-block;
+      width: 200px;
+      padding-right: 20px;
+      color: $dark;
+      font-size: 32px;
+      text-align: justify;
+      text-align: right;
+      font-weight: bold;
+    }
+    .value{
+      font-size: 32px;
+    }
+  }
   .content{
     flex: 1;
     overflow: auto;

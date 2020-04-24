@@ -16,30 +16,35 @@ import zhiqian_zhong from '../../../assets/images/mall/menus/zhiqian_zhong.png'
 export default function Menus(props: any) {
   const [menus, setMenus] = useState([
     {
+      id: 1,
       icon: guhuit_guan,
       selectedIcon: guhuit_zhong,
       text: '骨灰坛',
       active: true
     },
     {
+      id: 2,
       icon: huaquan_guan,
       selectedIcon: huaquan_zhong,
       text: '香火',
       active: false
     },
     {
+      id: 3,
       icon: jipin_guan,
       selectedIcon: jipin_zhong,
       text: '纸钱',
       active: false
     },
     {
+      id: 4,
       icon: xianghuo_guan,
       selectedIcon: xianghuo_zhong,
       text: '花圈',
       active: false
     },
     {
+      id: 5,
       icon: zhiqian_guan,
       selectedIcon: zhiqian_zhong,
       text: '祭品',
@@ -52,7 +57,7 @@ export default function Menus(props: any) {
       menu.active = item.text === menu.text
       return menu
     }))
-    props.toggleMenu()
+    props.toggleMenu(item.id)
   }
 
   return <View className='menus-wrap'>

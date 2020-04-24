@@ -1,11 +1,11 @@
 import { Component } from '@tarojs/taro'
+import { getType } from '../utils/util'
 
 export default class Mixins extends Component<any, any>{
   // 跳转页面
   navigateTo(url: string, query: any = {}) {
-    console.log('query: ', query)
-    const type = Object.prototype.toString.call(query)
-    if (type !== '[object MouseEvent]') {
+    console.log('???')
+    if (getType(query) !== 'mouseEvent') {
       let queryUrl: string = ''
       for (const key in query) {
         queryUrl += `${key}=${query[key]}&`

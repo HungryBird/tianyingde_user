@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { isEmpty, getStorageSync } from '../../utils/util'
+import { isEmpty, getStorageSync, setStorageSync } from '../../utils/util'
 import { inject, observer } from '@tarojs/mobx'
 import { login } from '../../api/login/login'
 import './login.scss'
@@ -18,12 +18,13 @@ export default class Index extends Component<any, any> {
       title: ''
     })
     const { infoStore } = this.props
+    const token = getStorageSync('token')
     console.log('infoStore.token: ', infoStore.token)
-    if (isEmpty(infoStore.token)) {
+    console.log('get token', getStorageSync('token'))
+    if (isEmpty(token)) {
       this.toLogin()
     } else {
       console.log('getStorageSync: ', getStorageSync('token'))
-      debugger
       setTimeout(() => {
         Taro.hideLoading()
         Taro.navigateTo({
@@ -49,6 +50,8 @@ export default class Index extends Component<any, any> {
       username: '13957474859',
       password: '123456'
     }).then((res: any) => {
+      setStorageSync('token', res.meta.access_token)
+      console.log('login token', getStorageSync('token'))
       infoStore.setToken(res.meta.access_token).then(() => {
         Taro.hideLoading()
         Taro.navigateTo({

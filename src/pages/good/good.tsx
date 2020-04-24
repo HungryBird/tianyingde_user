@@ -70,7 +70,6 @@ export default class Good extends Mixins {
   // 获取地址
   getAddresses() {
     addresses({}).then((res: any) => {
-      console.log('address: ', res)
       const address = res.data.filter((item: any) => {
         return item.default === 1
       })[0]
@@ -133,19 +132,29 @@ export default class Good extends Mixins {
 
   // 修改购买数量
   changeNumber(num: number) {
-    console.log('num: ', num)
+    const form = Object.assign({}, this.state.buy.form, {num})
+    const buy = Object.assign({}, this.state.buy, {...this.state.buy, ...{form}})
+    this.setState({
+      buy
+    })
   }
 
   // 确认购买
   confirm() {
+    const obj = {
+      num: this.state.buy.form.num,
+      goods: this.state.content
+    }
     this.navigateTo('/pages/createOrder/createOrder', {
-      id: JSON.stringify(this.state.content)
+      goods: JSON.stringify([obj])
     })
   }
 
   // 加入到购物车
   addCart() {
-    addToCart(this.state.buy.form)
+    addToCart(this.state.buy.form).then(() => {
+      this.getCarts()
+    })
   }
 
   render() {

@@ -5,8 +5,9 @@ import Mixins from '../../mixins/mixin'
 import './createOrder.scss'
 import Img from '../../assets/images/mall/shangptu.png'
 import InputNumber from '../../components/InputNumber/InputNumber'
+import { addresses } from '../../api/addresses/addresses'
+import { addOrder } from '../../api/mall/mall'
 import Button from '../../components/Button/button'
-import { carts } from '../../api/mall/mall'
 import { isEmpty } from '../../utils/util'
 
 export default class Cart extends Mixins {
@@ -22,6 +23,14 @@ export default class Cart extends Mixins {
         page: 1,
         type: 'more',
         loading: false
+      },
+      address: {},
+      buy: {
+        form: {
+          address: '',
+          receiver: '',
+          mobile: ''
+        }
       }
     }
   }
@@ -94,21 +103,59 @@ export default class Cart extends Mixins {
       })
       return
     }
-    this.navigateTo('/pages/createOrder/createOrder', arr)
+    if (isEmpty(this.state.address)) {
+      Taro.showToast({
+        title: '请添加地址',
+        duration: 2000
+      })
+      return
+    }
+    const goods_id = arr.map((item: any) => {
+      return item.goods.id
+    })
+    const quantity = arr.map((item: any) => {
+      return item.num
+    })
+    const data = {
+      goods_id,
+      quantity,
+      address_id: this.state.address.id
+    }
+    console.log('data: ', data)
+    addOrder(data).then((res: any) => {
+
+    })
+  }
+
+  // 获取地址
+  getAddresses() {
+    addresses({}).then((res: any) => {
+      const address = res.data.filter((item: any) => {
+        return item.default === 1
+      })[0]
+      if (!isEmpty(address)) {
+        this.setState({
+          address
+        }, function() {
+          console.log('state: ', this.state)
+        })
+      }
+      
+    })
   }
 
   componentWillMount() {
-    const { id, ids } = this.$router.params
-    if (!isEmpty(id)) {
-      const str = decodeURI(id)
-      const good = JSON.parse(str)
-      this.setState
-    } else if (!isEmpty(ids)) {
-      const str = decodeURI(ids)
-      const goods = JSON.parse(str)
-      
-      console.log('ids: ', JSON.parse(JSON.parse(decodeURI(ids))))
-    }
+    const { goods } = this.$router.params
+    const str = decodeURI(goods)
+    const data = JSON.parse(str).map((item: any) => {
+      item.checked = true
+      return item
+    })
+    const list = Object.assign({}, {...this.state.list, ...{data}})
+    this.setState({
+      list
+    })
+    this.getAddresses()
   }
 
   config: Config = {
@@ -120,6 +167,24 @@ export default class Cart extends Mixins {
     return(
       <View className='cart'>
         <Nav title='确认订单' />
+        <View className='address-wrap'>
+          {
+            isEmpty(this.state.address) ?  <View onClick={ this.navigateTo.bind(this, '/pages/address/address') }>点击新增地址</View> : <View className='form' onClick={ this.navigateTo.bind(this, '/pages/address/address')}>
+              <View className='form-item'>
+                <Text className='label'>收货人</Text>
+                <Text className='value'>{ this.state.address.receiver }</Text>
+              </View>
+              <View className='form-item'>
+                <Text className='label'>手机号码</Text>
+                <Text className='value'>{ this.state.address.mobile }</Text>
+              </View>
+              <View className='form-item'>
+                <Text className='label'>收货地址</Text>
+                <Text className='value'>{ this.state.address.full_address  }</Text>
+              </View>
+            </View>
+          }
+        </View>
         <View className='content'>
           {
             this.state.list.data.length !== 0 ?

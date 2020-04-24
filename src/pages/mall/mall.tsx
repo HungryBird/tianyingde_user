@@ -34,6 +34,7 @@ export default class Index extends Mixin {
           active: false
         }
       ],
+      currentId: 1,
       carts: 0,
       list: {
         data: [],
@@ -67,14 +68,18 @@ export default class Index extends Mixin {
   }
   // 获取数据
   getList() {
-    goods({}).then((res: any) => {
+    goods({id: this.state.currentId}).then((res: any) => {
       this.handleDefaultList(res)
     })
   }
   // 点击tab
-  toggleMenu() {
-    this.initList().then(() => {
-      this.getList()
+  toggleMenu(id: number) {
+    this.setState({
+      currentId: id
+    }, function() {
+      this.initList().then(() => {
+        this.getList()
+      })
     })
   }
   // 看新闻

@@ -2,6 +2,7 @@ import Taro, { Config } from '@tarojs/taro'
 import Mixins from '../../mixins/mixin'
 import { View, Text, Image } from '@tarojs/components'
 import TabBar from '../../components/TabBar/TabBar'
+import { setStorageSync, getStorageSync } from '../../utils/util'
 import './mine.scss'
 import ShezhiIcon from '../../assets/images/mine/shezhi.png'
 import QianbaoIcon from '../../assets/images/mine/qianbao.png'
@@ -45,6 +46,13 @@ export default class Index extends Mixins {
     navigationBarTitleText: '我的'
   }
 
+  test() {
+    const time = new Date().getTime()
+    setStorageSync('time', time)
+    const t = getStorageSync('time')
+    console.log('t', t)
+  }
+
   render () {
     const menus = [
       {
@@ -74,7 +82,7 @@ export default class Index extends Mixins {
         <View className='main'>
           <View className='header'>
             <View className='top'>
-              <View className='page-title page-title--position left'>
+              <View className='page-title page-title--position left' onClick={this.test.bind(this)}>
                 个人中心
               </View>
               <View className='icon page-title--position right shezhi'>
