@@ -42,7 +42,9 @@ class App extends Component {
       'pages/cart/cart',
       'pages/good/good',
       'pages/createOrder/createOrder',
-      'pages/address/address'
+      'pages/address/address',
+      'pages/binyi/binyi',
+      'pages/zangyi/zangyi'
     ],
     window: {
       backgroundTextStyle: 'light',

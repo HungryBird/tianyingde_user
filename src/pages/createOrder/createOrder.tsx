@@ -6,10 +6,13 @@ import './createOrder.scss'
 import Img from '../../assets/images/mall/shangptu.png'
 import InputNumber from '../../components/InputNumber/InputNumber'
 import { addresses } from '../../api/addresses/addresses'
-import { addOrder } from '../../api/mall/mall'
+import { addOrder, wechatpay } from '../../api/mall/mall'
 import Button from '../../components/Button/button'
 import { isEmpty } from '../../utils/util'
+import { inject, observer } from '@tarojs/mobx'
 
+@inject('infoStore')
+@observer
 export default class Cart extends Mixins {
   constructor(props: any) {
     super(props)
@@ -121,9 +124,14 @@ export default class Cart extends Mixins {
       quantity,
       address_id: this.state.address.id
     }
-    console.log('data: ', data)
     addOrder(data).then((res: any) => {
-
+      if (res.code >= 200 && res.code < 300) {
+        wechatpay({
+          out_trade_no: res.data.out_trade_no
+        })
+      } else {
+        
+      }
     })
   }
 

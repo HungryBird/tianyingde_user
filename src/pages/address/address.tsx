@@ -4,9 +4,10 @@ import Mixins from '../../mixins/mixin'
 import Nav from '../../components/Nav/Nav'
 import './address.scss'
 import bgImg from '../../assets/images/mine/ditubeij.png'
-import { addresses } from '../../api/addresses/addresses'
+import { addresses, addAddress, updateAddress } from '../../api/addresses/addresses'
 import { isEmpty } from '../../utils/util'
 import TaroRegionPicker from '../../components/taro-region-picker'
+import Button from '../../components/Button/Button'
 
 export default class Address extends Mixins {
   constructor(props: any) {
@@ -32,7 +33,6 @@ export default class Address extends Mixins {
           address
         })
       }
-      
     })
   }
 
@@ -42,6 +42,11 @@ export default class Address extends Mixins {
 
   onGetRegion(e: any) {
     console.log('e: ', e)
+  }
+
+  save() {
+    const submit = isEmpty(this.state.address) ? addAddress : updateAddress
+    submit(this.state.address)
   }
 
   render() {
@@ -59,14 +64,15 @@ export default class Address extends Mixins {
             <Input value={this.state.address.mobile} />
           </View>
           <View className='form-item'>
-            <Text className='label'>收货地址</Text>
-            <TaroRegionPicker onGetRegion={this.onGetRegion.bind(this)}>
-              <Input value={this.state.address.full_address} />
-            </TaroRegionPicker>
+            <Text className='label'>收货地址{this.state.address.full_address}</Text>
+            <TaroRegionPicker onGetRegion={this.onGetRegion.bind(this)} region={this.state.address.full_address} />
           </View>
           <View className='form-item'>
             <Text className='label'>详细地址</Text>
             <Input value={this.state.address.address} />
+          </View>
+          <View style='width: 100%;text-align: center;margin-top: 40px;'>
+            <Button text='保存' type='buy' round onClick={this.save.bind(this)} />
           </View>
         </View>
         <Image mode='aspectFill' src={bgImg} className='bg-image' />

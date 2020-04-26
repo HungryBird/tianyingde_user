@@ -50,8 +50,6 @@ export default class Index extends Mixin {
   componentWillMount () { }
 
   componentDidMount () { 
-    // 获取列表数据
-    this.getList()
     // 获取购物车数据
     this.carts()
   }

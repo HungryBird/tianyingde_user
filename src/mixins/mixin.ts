@@ -4,7 +4,6 @@ import { getType } from '../utils/util'
 export default class Mixins extends Component<any, any>{
   // 跳转页面
   navigateTo(url: string, query: any = {}) {
-    console.log('???')
     if (getType(query) !== 'mouseEvent') {
       let queryUrl: string = ''
       for (const key in query) {
@@ -33,8 +32,9 @@ export default class Mixins extends Component<any, any>{
       })
       this.setState({
         list
+      }, function() {
+        resolve()
       })
-      resolve()
     })
   }
   // 处理获取的列表数据

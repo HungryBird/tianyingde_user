@@ -1,6 +1,7 @@
 import Taro, { Config } from '@tarojs/taro'
 import Mixins from '../../mixins/mixin'
 import { View, Text, Image } from '@tarojs/components'
+import { getInfo } from '../../api/user/user'
 import TabBar from '../../components/TabBar/TabBar'
 import { setStorageSync, getStorageSync } from '../../utils/util'
 import './mine.scss'
@@ -19,8 +20,13 @@ export default class Index extends Mixins {
     this.state = {
       user: {
         portrait: '',
-        name: '测试用的名字',
-        money: 0
+        username: '测试用的名字',
+        nickname: '',
+        money: 0,
+        balance: {
+          amount: 0,
+          locked_amount: 0
+        }
       }
     }
   }
@@ -31,7 +37,15 @@ export default class Index extends Mixins {
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    getInfo({}).then((res: any) => {
+      this.setState({
+        user: res.data
+      }, function() {
+        console.log('user: ', this.state.user.balance.amount)
+      })
+    })
+   }
 
   componentDidHide () { }
 
@@ -44,13 +58,6 @@ export default class Index extends Mixins {
    */
   config: Config = {
     navigationBarTitleText: '我的'
-  }
-
-  test() {
-    const time = new Date().getTime()
-    setStorageSync('time', time)
-    const t = getStorageSync('time')
-    console.log('t', t)
   }
 
   render () {
@@ -82,14 +89,14 @@ export default class Index extends Mixins {
         <View className='main'>
           <View className='header'>
             <View className='top'>
-              <View className='page-title page-title--position left' onClick={this.test.bind(this)}>
+              <View className='page-title page-title--position left'>
                 个人中心
               </View>
               <View className='icon page-title--position right shezhi'>
                 <Image src={ShezhiIcon} mode='widthFix' />
               </View>
-              <Image mode='widthFix' src={this.state.user.portrait} className='portrait' />
-              <Text className='username'>{ this.state.user.name }</Text>
+              <Image mode='widthFix' src={this.state.user.avatar} className='portrait' />
+              <Text className='username'>{ this.state.user.nickname }</Text>
             </View>
             <View className='bottom'>
               <View className='btn separator'>
@@ -101,7 +108,7 @@ export default class Index extends Mixins {
               <View className='btn separator'>
                 <View className='btn__slot'>
                   <View className='text t'>余额</View>
-                  <View className='price number'>1000</View>
+                  <View className='price number'>{ (Number(this.state.user.balance.amount) + Number(this.state.user.balance.locked_amount)).toFixed(2) }</View>
                 </View>
               </View>
             </View>

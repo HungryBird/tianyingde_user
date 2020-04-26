@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { isEmpty, getStorageSync, setStorageSync } from '../../utils/util'
 import { inject, observer } from '@tarojs/mobx'
-import { login } from '../../api/login/login'
+import { login_dev, login_pro } from '../../api/login/login'
 import './login.scss'
 
 
@@ -17,14 +17,10 @@ export default class Index extends Component<any, any> {
     Taro.showLoading({
       title: ''
     })
-    const { infoStore } = this.props
     const token = getStorageSync('token')
-    console.log('infoStore.token: ', infoStore.token)
-    console.log('get token', getStorageSync('token'))
     if (isEmpty(token)) {
       this.toLogin()
     } else {
-      console.log('getStorageSync: ', getStorageSync('token'))
       setTimeout(() => {
         Taro.hideLoading()
         Taro.navigateTo({
@@ -46,16 +42,19 @@ export default class Index extends Component<any, any> {
 
   toLogin() {
     const { infoStore } = this.props
+    const env = process.env.NODE_ENV
+    const login = env === 'development' ? login_dev : login_pro
     login({
       username: '13957474859',
       password: '123456'
     }).then((res: any) => {
       setStorageSync('token', res.meta.access_token)
-      console.log('login token', getStorageSync('token'))
+      setStorageSync('openid', res.data.openid)
       infoStore.setToken(res.meta.access_token).then(() => {
-        Taro.hideLoading()
-        Taro.navigateTo({
-          url: '/pages/index/index'
+        infoStore.setOpenid(res.data.openid).then(() => {
+          Taro.navigateTo({
+            url: '/pages/index/index'
+          })
         })
       })
     })

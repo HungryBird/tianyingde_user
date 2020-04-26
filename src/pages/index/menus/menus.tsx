@@ -11,22 +11,22 @@ const menus = [
   {
     icon: obituary,
     text: '在线讣告',
-    path: '/pages/obituary/obituary'
+    path: '/pages/fugao/fugao'
   },
   {
     icon: funeral,
     text: '殡仪服务',
-    path: '/pages/funeral/funeral'
+    path: '/pages/binyi/binyi'
   },
   {
     icon: burial,
     text: '葬仪服务',
-    path: '/pages/burial/burial'
+    path: '/pages/zangyi/zangyi'
   },
   {
     icon: fete,
     text: '祭祀服务',
-    path: '/pages/fete/fete'
+    path: '/pages/jisi/jisi'
   }
 ]
 

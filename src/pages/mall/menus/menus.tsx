@@ -1,5 +1,5 @@
 
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useEffect } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import './menus.scss'
 import guhuit_zhong from '../../../assets/images/mall/menus/guhuit_zhong.png'
@@ -57,8 +57,15 @@ export default function Menus(props: any) {
       menu.active = item.text === menu.text
       return menu
     }))
-    props.toggleMenu(item.id)
+    
   }
+
+  useEffect(() => {
+    const id = menus.filter((item: any) => {
+      return item.active
+    })[0]['id']
+    props.toggleMenu(id)
+  }, [menus])
 
   return <View className='menus-wrap'>
     {

@@ -14,7 +14,6 @@ export default function request(url: string, method: string | any = 'GET', data:
         title: '加载中...'
       })
       const token = getToken()
-      console.log('request token: ', token)
       Taro.request({
         url: `${baseURL}${url}`,
         method,
@@ -24,8 +23,17 @@ export default function request(url: string, method: string | any = 'GET', data:
           'content-type': contentType
         },
         success(res: any) {
-          Taro.hideLoading()
-          resolve(res.data)
+          if (res.data.code >= 200 && res.data.code < 300) {
+            Taro.hideLoading()
+            resolve(res.data)
+          } else {
+            Taro.showToast({
+              icon: 'none',
+              title: res.message,
+              duration: 2000
+            })
+            reject(res)
+          }
         },
         fail(err: any) {
           const { status } = err
@@ -34,14 +42,9 @@ export default function request(url: string, method: string | any = 'GET', data:
             Taro.navigateTo({
               url: '/pages/login/login'
             })
-          }
-          Taro.hideLoading()
-          Taro.showLoading({
-            title: err.statusText
-          })
-          setTimeout(() => {
+          } else {
             Taro.hideLoading()
-          }, 2000)
+          }
           reject(err)
         }
       })
