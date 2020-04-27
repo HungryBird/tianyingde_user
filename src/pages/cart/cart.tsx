@@ -170,7 +170,7 @@ export default class Cart extends Mixins {
                 ￥{ this.state.total }
               </Text>
             </Text>
-            <Button text='结算' type='buy' onClick={this.settle.bind(this)} round />
+            <Button text='结算' type='primary' onClick={this.settle.bind(this)} round />
           </View>
         </View>
       </View>

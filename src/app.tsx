@@ -44,7 +44,10 @@ class App extends Component {
       'pages/createOrder/createOrder',
       'pages/address/address',
       'pages/binyi/binyi',
-      'pages/zangyi/zangyi'
+      'pages/zangyi/zangyi',
+      'pages/jisi/jisi',
+      'pages/service/list',
+      'pages/goods/list'
     ],
     window: {
       backgroundTextStyle: 'light',

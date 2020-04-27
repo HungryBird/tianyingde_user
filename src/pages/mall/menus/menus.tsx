@@ -57,7 +57,6 @@ export default function Menus(props: any) {
       menu.active = item.text === menu.text
       return menu
     }))
-    
   }
 
   useEffect(() => {

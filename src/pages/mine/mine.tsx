@@ -2,8 +2,8 @@ import Taro, { Config } from '@tarojs/taro'
 import Mixins from '../../mixins/mixin'
 import { View, Text, Image } from '@tarojs/components'
 import { getInfo } from '../../api/user/user'
+import { getCustomer } from '../../api/mine/mine'
 import TabBar from '../../components/TabBar/TabBar'
-import { setStorageSync, getStorageSync } from '../../utils/util'
 import './mine.scss'
 import ShezhiIcon from '../../assets/images/mine/shezhi.png'
 import QianbaoIcon from '../../assets/images/mine/qianbao.png'
@@ -18,9 +18,10 @@ export default class Index extends Mixins {
   constructor(props: any) {
     super(props)
     this.state = {
+      mobile: '',
       user: {
         portrait: '',
-        username: '测试用的名字',
+        username: '',
         nickname: '',
         money: 0,
         balance: {
@@ -45,9 +46,16 @@ export default class Index extends Mixins {
         console.log('user: ', this.state.user.balance.amount)
       })
     })
+    getCustomer().then((res: any) => {
+      console.log('res: ', res)
+    })
    }
 
   componentDidHide () { }
+
+  contact = () => {
+    
+  }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -57,6 +65,7 @@ export default class Index extends Mixins {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
+    navigationStyle: 'custom',
     navigationBarTitleText: '我的'
   }
 
@@ -64,23 +73,18 @@ export default class Index extends Mixins {
     const menus = [
       {
         label: '讣告查询',
-        path: '/pages/fugao/chaxun',
+        path: '/pages/fugao/list',
         icon: Icon1
       },
       {
         label: '服务订单',
-        path: '/pages/fugao/chaxun',
+        path: '/pages/service/list',
         icon: Icon2
       },
       {
         label: '商品订单',
-        path: '/pages/fugao/chaxun',
+        path: '/pages/goods/list',
         icon: Icon3
-      },
-      {
-        label: '联系客服',
-        path: '/pages/fugao/chaxun',
-        icon: Icon4
       }
     ]
 
@@ -119,6 +123,7 @@ export default class Index extends Mixins {
                 return <MenuListItem path={item.path} label={item.label} icon={item.icon} />
               })
             }
+            <MenuListItem label='联系客服' icon={Icon4} onClick={this.contact} />
             <Image mode='widthFix' src={bgImg} className='bg-img' />
           </View>
           <TabBar active="mine" />

@@ -126,10 +126,6 @@ export default class Good extends Mixins {
     })
   }
 
-  clickMask(e: any) {
-    e.stopPropagation()
-  }
-
   // 修改购买数量
   changeNumber(num: number) {
     const form = Object.assign({}, this.state.buy.form, {num})
@@ -181,11 +177,11 @@ export default class Good extends Mixins {
           </View>
           <View className='bottom'>
             <Button text='加入购物车' onClick={this.addCart.bind(this)}  round />
-            <Button text='购买' type='buy' onClick={this.toBuy.bind(this)} round />
+            <Button text='购买' type='primary' onClick={this.toBuy.bind(this)} round />
           </View>
           {/* 遮罩层 */}
           <Mask visible={this.state.buy.visible} onChangeVisible={this.changeVisible.bind(this)}>
-            <View className='form-wrap' onClick={this.clickMask.bind(this)}>
+            <View className='form-wrap'>
               <View className='top'>
                 <View className='left'>
                   <Image style='width: 100%;' mode='widthFix' src={this.state.content.image} />
@@ -230,7 +226,7 @@ export default class Good extends Mixins {
                   </View>
                   <InputNumber min={1} value={this.state.buy.form.num} onChangeNumber={this.changeNumber.bind(this)} />
                 </View>
-                <Button text='确定' type='buy' round onClick={this.confirm.bind(this)} />
+                <Button text='确定' type='primary' round onClick={this.confirm.bind(this)} />
               </View>
             </View>
           </Mask>

@@ -33,5 +33,5 @@ export const addToCart = (data: any) => {
 }
 
 export const wechatpay = (data: any) => {
-  return http('/payment/wechatpay', 'POST', data)
+  return http('/consumer/payment/wechatpay', 'POST', data)
 }

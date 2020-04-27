@@ -11,7 +11,7 @@ export default function Cart(props: any) {
     })
   }
 
-  return <View className='cart-icon' onClick={navigateTo.bind('/pages/cart/cart')}>
+  return <View className={`cart-icon ${props.className}`} onClick={navigateTo.bind('/pages/cart/cart')} style={props.style}>
     <Text className='dot number'>
       { props.number }
     </Text>
@@ -21,7 +21,9 @@ export default function Cart(props: any) {
 
 Cart.propTypes = {
   number: propTypes.number,
-  url: propTypes.string
+  url: propTypes.string,
+  style: propTypes.string,
+  className: propTypes.string
 }
 
 Cart.defaultProps = {

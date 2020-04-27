@@ -72,7 +72,7 @@ export default class Address extends Mixins {
             <Input value={this.state.address.address} />
           </View>
           <View style='width: 100%;text-align: center;margin-top: 40px;'>
-            <Button text='保存' type='buy' round onClick={this.save.bind(this)} />
+            <Button text='保存' type='primary' round onClick={this.save.bind(this)} />
           </View>
         </View>
         <Image mode='aspectFill' src={bgImg} className='bg-image' />

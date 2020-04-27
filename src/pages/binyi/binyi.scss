@@ -1,0 +1,113 @@
+@import '../../styles/variable';
+
+.binyi{
+  .inner{
+    padding: 0 20px;
+    .content{
+      position: relative;
+      margin-top: 25PX;
+      padding: 70px 20px 30px 20px;
+      border: 1PX solid $dark;
+      background-image: url(../../assets/images/common/zhixunkuang.png);
+      background-size: cover;
+      background-position: center;
+      background-repeat: repeat;
+      border-radius: 20px;
+      .title-outter-wrap{
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateY(-50%);
+        .title-inner-wrap{
+          background-color: #fff;
+          border-radius: 60px;
+          border: 1PX solid $dark;
+          .title{
+            background-image: url(../../assets/images/common/biaotidikuang.png);
+            background-size: cover;
+            background-position: center;
+            color: $yellow;
+            padding: 16px 40px;
+            border-radius: 60px;
+            margin: 2PX;
+            font-size: 32px;
+            text-shadow:  $dark 1PX 0 0, $dark 0 1PX 0, $dark -1PX 0 0, $dark 0 -1PX 0;
+          }
+        }
+        .cloud{
+          position: absolute;
+          bottom: 0;
+          width: 140px;
+        }
+        .right.cloud{
+          transform: translate(70%, 50%);
+          right: 0;
+        }
+      }
+      .text-wrap{
+        font-size: 30px;
+        padding: 0 20px;
+        color: $dark;
+        font-weight: bold;
+        ol{
+          li{
+            padding: 20px 0;
+          }
+        }
+      }
+    }
+  }
+  
+  .form-wrap{
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 86%;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    .top{
+      position: relative;
+      height: 40PX;
+      width: 100%;
+      background-image: url(../../assets/images/common/xiangyunkuang.png);
+      background-size: 100%;
+      background-position: center center;
+      border: 1PX solid $dark;
+      .title-wrap{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 40px;
+        font-size: 36px;
+        font-weight: bold;
+        color: $yellow;
+        text-shadow:  #000 1PX 0 0, #000 0 1PX 0, #000 -1PX 0 0, #000 0 -1PX 0;
+      }
+    }
+    .bottom-content{
+      padding: 10px 6px;
+      .form-item{
+        padding: 10px 0;
+        &:first-child{
+          border-bottom: 1PX solid $primary;
+        }
+        .label{
+          display: inline-block;
+          width: 180px;
+          color: $dark;
+          font-size: 32px;
+          text-align: justify;
+          font-weight: bold;
+          text-align: center;
+        }
+        .value{
+          display: inline-block;
+          font-size: 32px;
+        }
+      }
+    }
+  }
+}

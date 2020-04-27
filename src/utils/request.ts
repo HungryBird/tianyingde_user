@@ -18,18 +18,19 @@ export default function request(url: string, method: string | any = 'GET', data:
         url: `${baseURL}${url}`,
         method,
         data,
+        cache: 'no-cache',
         header: {
           Authorization: isEmpty(token) ? '' : token,
           'content-type': contentType
         },
         success(res: any) {
-          if (res.data.code >= 200 && res.data.code < 300) {
+          if (res.data.returnCode >= 200 && res.data.returnCode < 300) {
             Taro.hideLoading()
             resolve(res.data)
           } else {
             Taro.showToast({
               icon: 'none',
-              title: res.message,
+              title: res.data.message,
               duration: 2000
             })
             reject(res)

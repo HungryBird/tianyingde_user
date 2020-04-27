@@ -125,13 +125,21 @@ export default class Cart extends Mixins {
       address_id: this.state.address.id
     }
     addOrder(data).then((res: any) => {
-      if (res.code >= 200 && res.code < 300) {
-        wechatpay({
-          out_trade_no: res.data.out_trade_no
+      wechatpay({
+        out_trade_no: res.data.out_trade_no
+      }).then((res: any) => {
+        Taro.requestPayment({
+          ...res.data,
+          success() {
+            this.navigateTo({
+              url: '/pages/mine/'
+            })
+          },
+          fail(err: any) {
+            
+          }
         })
-      } else {
-        
-      }
+      })
     })
   }
 
@@ -144,8 +152,6 @@ export default class Cart extends Mixins {
       if (!isEmpty(address)) {
         this.setState({
           address
-        }, function() {
-          console.log('state: ', this.state)
         })
       }
       
@@ -228,7 +234,7 @@ export default class Cart extends Mixins {
                 ￥{ this.state.total }
               </Text>
             </Text>
-            <Button text='提交订单' type='buy' onClick={this.settle.bind(this)} round />
+            <Button text='提交订单' type='primary' onClick={this.settle.bind(this)} round />
           </View>
         </View>
       </View>

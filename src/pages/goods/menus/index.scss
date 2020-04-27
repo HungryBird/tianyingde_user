@@ -1,0 +1,30 @@
+@import '../../../styles/variable';
+
+.good-list-menu-wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .item{
+    position: relative;
+    color: $primary;
+    text-align: center;
+    flex: 1;
+    font-size: 30px;
+    &:not(:last-child){
+      &::after{
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        height: 70%;
+        width: 1PX;
+        background-color: $primary;
+      }
+    }
+  }
+  .item.active{
+    color: $dark;
+    font-weight: bold;
+  }
+}

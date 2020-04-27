@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState, Component } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import propTypes from 'prop-types'
 import './mask.scss'
@@ -47,10 +47,13 @@ import './mask.scss'
 export default class Mask extends Component<any, any> {
   static propTypes: { 
     visible: propTypes.Requireable<boolean>; 
-    onChangeVisible: propTypes.Requireable<(...args: any[]) => any> 
+    onChangeVisible: propTypes.Requireable<(...args: any[]) => any>,
+    className: propTypes.Requireable<string>,
+    style: propTypes.Requireable<string>
   }
   static defaultProps: { 
-    visible: false 
+    visible: false,
+    className: ''
   }
   constructor(props: any) {
     super(props)
@@ -72,18 +75,24 @@ export default class Mask extends Component<any, any> {
     this.props.onChangeVisible(!this.state.visible)
   }
 
+  stop(e: any) {
+    e.stopPropagation()
+  }
+
   render() {
     return (
       <View>
         {
-          this.state.visible ? <View className='mask-wrap' onClick={this.toggleVisible.bind(this)}>
-            {
-              Array.isArray(this.props.children) ? 
-              this.props.children.map((item: any) => {
-                return item
-              }) : this.props.children
-            }
-            </View> : null
+          this.state.visible ? <View className={`mask-wrap ${this.props.className}`} style={this.props.style} onClick={this.toggleVisible.bind(this)}>
+            <View className='inner' onClick={this.stop.bind(this)}>
+              {
+                Array.isArray(this.props.children) ? 
+                this.props.children.map((item: any) => {
+                  return item
+                }) : this.props.children
+              }
+            </View>
+          </View> : null
         }
       </View>
     )
