@@ -1,6 +1,6 @@
-@import '../../../styles/variable';
+@import '../../styles/variable';
 
-.good-list-menu-wrap{
+.menu-wrap{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +10,8 @@
     text-align: center;
     flex: 1;
     font-size: 30px;
+    padding: 0 30px;
+    white-space: nowrap;
     &:not(:last-child){
       &::after{
         content: '';

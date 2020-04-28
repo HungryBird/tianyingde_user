@@ -47,7 +47,12 @@ class App extends Component {
       'pages/zangyi/zangyi',
       'pages/jisi/jisi',
       'pages/service/list',
-      'pages/goods/list'
+      'pages/goods/list',
+      'pages/fugao/fugao',
+      'pages/fugao/dianjin',
+      'pages/fugao/liwu',
+      'pages/fugao/liuyan',
+      'pages/user/set'
     ],
     window: {
       backgroundTextStyle: 'light',

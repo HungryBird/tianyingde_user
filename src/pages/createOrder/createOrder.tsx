@@ -181,7 +181,7 @@ export default class Cart extends Mixins {
     return(
       <View className='cart'>
         <Nav title='确认订单' />
-        <View className='address-wrap'>
+        <View className='form-wrap'>
           {
             isEmpty(this.state.address) ?  <View onClick={ this.navigateTo.bind(this, '/pages/address/address') }>点击新增地址</View> : <View className='form' onClick={ this.navigateTo.bind(this, '/pages/address/address')}>
               <View className='form-item'>

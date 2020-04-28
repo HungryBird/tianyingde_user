@@ -1,0 +1,131 @@
+@import '../../styles/variable';
+
+.fugao{
+  .content{
+    padding: 20px;
+  }
+  .bg-img{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 480px;
+  }
+}
+
+.liwu,.dianjin{
+  display: flex;
+  flex-direction: column;
+  .scroll-wrap{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    .taro-scroll{
+      flex: 1;
+      padding: 0 20px;
+      .block{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        border: 1PX solid $grey;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
+        background: #fff;
+        .left{
+          .money{
+            color: $dark;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 1.5;
+          }
+          .label{
+            color: $disabled;
+            font-size: 28px;
+            line-height: 1.5;
+          }
+        }
+        .right{
+          position: relative;
+          width: 40px;
+          .taro-img{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 40px;
+            margin: auto;
+          }
+        }
+      }
+    }
+  }
+  .bg-img{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 480px;
+  }
+}
+
+.liuyan{
+  .scroll-wrap{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    .taro-scroll{
+      flex: 1;
+      padding: 0 20px;
+      .block{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        border: 1PX solid $grey;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
+        background: #fff;
+        .left{
+          width: 160px;
+          height: 160px;
+          .taro-img{
+            width: 100%;
+            border-radius: 100%;
+            overflow: hidden;
+          }
+          .money{
+            color: $dark;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 1.5;
+          }
+          .label{
+            color: $disabled;
+            font-size: 28px;
+            line-height: 1.5;
+          }
+        }
+        .right{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          flex: 1;
+        }
+      }
+    }
+  }
+  .bg-img{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 480px;
+  }
+}

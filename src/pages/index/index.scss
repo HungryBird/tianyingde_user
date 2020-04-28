@@ -120,7 +120,6 @@
         .list{
           display: flex;
           justify-content: space-around;
-          align-items: center;
           margin-bottom: 14px;
           border: 1PX solid $grey;
           border-radius: 20px;
@@ -128,7 +127,7 @@
           box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
           background: #fff;
           .left{
-            width: 160px;
+            width: 200px;
             margin-right: 25px;
           }
           .right{

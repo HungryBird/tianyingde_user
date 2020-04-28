@@ -1,3 +1,5 @@
+@import '../../styles/variable';
+
 .good-list{
   display: flex;
   flex-direction: column;
@@ -9,6 +11,44 @@
     .taro-scroll{
       flex: 1;
       padding: 0 20px;
+      .block{
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 14px;
+        border: 1PX solid $grey;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
+        background: #fff;
+        .left{
+          width: 200px;
+          border: 1PX solid $dark;
+          .taro-img{
+            width: 100%;
+          }
+        }
+        .right{
+          padding: 0 20px;
+          .top{
+            .name{
+              color: $dark;
+              font-weight: bold;
+              font-size: 28px;
+            }
+            .number{
+              font-size: 26px;
+              color: $primary;
+            }
+          }
+          .bottom{
+            text-align: right;
+            .status,.time{
+              color: $disabled;
+              font-size: 24px;
+            }
+          }
+        }
+      }
     }
   }
   .bg-img{

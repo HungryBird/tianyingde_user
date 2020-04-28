@@ -1,36 +1,10 @@
 import Taro, { useState, useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import propTypes from 'prop-types'
-import './index.scss'
+import './menu.scss'
 
 export default function Menu (props: any) {
-  const [menus, setMenus] = useState([
-    {
-      id: 0,
-      text: '全部',
-      active: true
-    },
-    {
-      id: 1,
-      text: '待付款',
-      active: false
-    },
-    {
-      id: 2,
-      text: '待发货',
-      active: false
-    },
-    {
-      id: 3,
-      text: '待收货',
-      active: false
-    },
-    {
-      id: 4,
-      text: '待评价',
-      active: false
-    }
-  ])
+  const [menus, setMenus] = useState(props.data)
 
   useEffect(() => {
     props.onChange(menus.filter((item: any) => {
@@ -39,13 +13,13 @@ export default function Menu (props: any) {
   }, [menus])
 
   function itemClick(item: any) {
-    setMenus(menus.map(menu => {
+    setMenus(menus.map((menu: any) => {
       menu.active = item.id === menu.id
       return menu
     }))
   }
 
-  return <View className={`good-list-menu-wrap ${props.className}`} style={props.style}>
+  return <View className={`menu-wrap ${props.className}`} style={props.style}>
     {
       menus.map((item: any) => {
         return <View onClick={itemClick.bind(this, item)} className={`item ${item.active ? 'active' : ''}`}>
@@ -60,9 +34,10 @@ Menu.propTypes = {
   style: propTypes.string,
   className: propTypes.string,
   onClick: propTypes.func,
-  onChange: propTypes.func
+  onChange: propTypes.func,
+  data: propTypes.array
 }
 
 Menu.defaultProps = {
-
+  data: []
 }

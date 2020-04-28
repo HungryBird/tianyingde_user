@@ -18,7 +18,9 @@ export default function MenuListItem(props: any) {
 
   return <View className={`menu-list-item ${props.className}`} style={props.style} onClick={props.onClick ? click.bind(this) : navigateTo.bind(this)}>
     <View className='left'>
-      <Image mode='widthFix' src={props.icon} />
+      {
+        props.icon ? <Image mode='widthFix' src={props.icon} /> : null
+      }
       <Text>{ props.label }</Text>
     </View>
     <View className='right'>

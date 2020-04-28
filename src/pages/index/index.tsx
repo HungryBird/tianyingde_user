@@ -182,8 +182,8 @@ export default class Index extends Mixin {
                       <Image src={ item.images } mode='widthFix' style='width: 100%;' />
                     </View>
                     <View className='right'>
-                      <Text className='title'>{ item.title }</Text>
-                      <Text className='content-text'>{ item.content }</Text>
+                      <View className='title'>{ item.title }</View>
+                      <View className='content-text'>{ item.content }</View>
                       <View className='bottom'>
                         <View className='ydl'>
                           <Image src={Yuedul} mode='widthFix' />

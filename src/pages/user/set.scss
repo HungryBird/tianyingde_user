@@ -1,0 +1,30 @@
+@import '../../styles/variable';
+
+.set{
+  text-align: right;
+  .weui-input{
+    text-align: right;
+  }
+  .touxiang{
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+  .more{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .weui-input{
+      margin-right: 20px;
+    }
+  }
+  .bg-img{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 480px;
+  }
+}

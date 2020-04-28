@@ -42,19 +42,20 @@ export default class Index extends Mixins {
     getInfo({}).then((res: any) => {
       this.setState({
         user: res.data
-      }, function() {
-        console.log('user: ', this.state.user.balance.amount)
       })
     })
     getCustomer().then((res: any) => {
-      console.log('res: ', res)
+      this.setState({
+        mobile: res.data.mobile
+      })
     })
    }
 
   componentDidHide () { }
 
   contact = () => {
-    
+    const mobile = `tel:${this.state.mobile}`
+    window.location.href = mobile
   }
 
   /**
@@ -73,7 +74,7 @@ export default class Index extends Mixins {
     const menus = [
       {
         label: '讣告查询',
-        path: '/pages/fugao/list',
+        path: '/pages/fugao/fugao',
         icon: Icon1
       },
       {
@@ -97,7 +98,7 @@ export default class Index extends Mixins {
                 个人中心
               </View>
               <View className='icon page-title--position right shezhi'>
-                <Image src={ShezhiIcon} mode='widthFix' />
+                <Image src={ShezhiIcon} mode='widthFix' onClick={this.navigateTo.bind(this, '/pages/user/set')} />
               </View>
               <Image mode='widthFix' src={this.state.user.avatar} className='portrait' />
               <Text className='username'>{ this.state.user.nickname }</Text>

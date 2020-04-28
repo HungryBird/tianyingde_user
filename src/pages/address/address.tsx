@@ -53,10 +53,9 @@ export default class Address extends Mixins {
     return (
       <View className='address page-main'>
         <Nav title='收货地址' />
-        <View className='address-wrap border'>
+        <View className='form-wrap border'>
           <View className='form-item'>
             <Text className='label'>收货人</Text>
-            {/* <View className='value'>{ this.state.address.receiver }</View> */}
             <Input value={this.state.address.receiver} />
           </View>
           <View className='form-item'>

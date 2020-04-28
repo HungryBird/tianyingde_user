@@ -45,11 +45,12 @@ export default class Mixins extends Component<any, any>{
         data,
         page: this.state.list.page + 1,
         total: res.meta.page_info.total,
-        type: this.state.list.data.length === this.state.list.total ? 'noMore' : 'more'
+        type: data.length >= res.meta.page_info.total ? 'noMore' : 'more'
       })
       this.setState({
         list
       }, () => {
+        console.log('list: ', this.state.list)
         resolve()
       })
     })

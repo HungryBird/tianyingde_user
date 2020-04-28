@@ -1,0 +1,57 @@
+@import '../../styles/variable';
+
+.service-list{
+  display: flex;
+  flex-direction: column;
+  .scroll-wrap{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    .taro-scroll{
+      flex: 1;
+      padding: 0 20px;
+      .block{
+        margin-bottom: 14px;
+        border: 1PX solid $grey;
+        border-radius: 20px;
+        box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
+        background: #fff;
+        overflow: hidden;
+        .banner{
+          background-color: $primary;
+          text-align: center;
+          color: #fff;
+          line-height: 2.0;
+          font-size: 30px;
+        }
+        .content{
+          padding: 20px;
+          font-size: 28px;
+          .item{
+            line-height: 2;
+          }
+          .label{
+            color: $primary;
+          }
+          .bottom{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .status,.time{
+              color: $disabled;
+            }
+          }
+        }
+      }
+    }
+  }
+  .bg-img{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 480px;
+  }
+}
