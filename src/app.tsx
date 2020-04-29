@@ -52,12 +52,14 @@ class App extends Component {
       'pages/fugao/dianjin',
       'pages/fugao/liwu',
       'pages/fugao/liuyan',
-      'pages/user/set'
+      'pages/user/set',
+      'pages/wallet/wallet',
+      'pages/online/list'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '天胤德',
       navigationBarTextStyle: 'black'
     }
     // tabBar: {

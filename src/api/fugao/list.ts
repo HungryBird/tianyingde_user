@@ -11,3 +11,11 @@ export const gifts = (data: any) => {
 export const notes = (data: any) => {
   return http('/consumer/users/obituaries/notes', 'GET', data)
 }
+
+export const obituaries = (data: any) => {
+  return http('/consumer/users/obituaries', 'GET', data)
+}
+
+export const accepts = (data: any) => {
+  return http('/consumer/users/obituaries/accepts', 'GET', data)
+}

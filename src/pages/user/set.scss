@@ -15,6 +15,19 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex: 1;
+    .address{
+      flex: 1;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      padding: 0 20px;
+    }
+    .taro-img{
+      width: 40px;
+      height: 40px;
+    }
     .weui-input{
       margin-right: 20px;
     }

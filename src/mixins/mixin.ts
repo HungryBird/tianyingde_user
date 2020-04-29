@@ -50,7 +50,6 @@ export default class Mixins extends Component<any, any>{
       this.setState({
         list
       }, () => {
-        console.log('list: ', this.state.list)
         resolve()
       })
     })

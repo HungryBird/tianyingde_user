@@ -103,7 +103,7 @@ export default class Index extends Mixins {
               <Image mode='widthFix' src={this.state.user.avatar} className='portrait' />
               <Text className='username'>{ this.state.user.nickname }</Text>
             </View>
-            <View className='bottom'>
+            <View className='bottom' onClick={this.navigateTo.bind(this, `/pages/wallet/wallet?amount=${this.state.user.balance.amount}&locked_amount=${this.state.user.balance.locked_amount}`)}>
               <View className='btn separator'>
                 <View className='btn__slot'>
                   <Image mode='widthFix' src={QianbaoIcon} />

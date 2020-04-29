@@ -39,5 +39,6 @@ Menu.propTypes = {
 }
 
 Menu.defaultProps = {
-  data: []
+  data: [],
+  className: ''
 }

@@ -108,3 +108,7 @@ export const getType = (data: any) => {
   }
   return _dict[Object.prototype.toString.call(data)]
 }
+
+export const getBaseURL = () => {
+  return process.env.NODE_ENV === 'development' ? 'http://api.jiayoufabao.com/api' : 'http://api.jiayoufabao.cn/api'
+}

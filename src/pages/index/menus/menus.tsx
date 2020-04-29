@@ -11,7 +11,7 @@ const menus = [
   {
     icon: obituary,
     text: '在线讣告',
-    path: '/pages/fugao/fugao'
+    path: '/pages/online/list'
   },
   {
     icon: funeral,

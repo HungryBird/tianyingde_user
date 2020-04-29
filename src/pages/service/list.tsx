@@ -95,7 +95,7 @@ export default class GoodList extends Mixins {
       <View className='service-list page-main'>
         <Nav title='服务订单' />
         <View className='scroll-wrap'>
-          <Menu onChange={this.changeMenu} style='width: 80%;margin: 10px auto;' data={data} />
+          <Menu onChange={this.changeMenu} style='margin: 10px auto;' data={data} />
           <ScrollView onScrollToLower={this.scrollToLower} scrollY>
             {
               this.state.list.data.map((item: any) => {

@@ -1,9 +1,9 @@
 import Taro from '@tarojs/taro'
-import { getStorageSync, isEmpty, clearStorageSync } from '../utils/util'
+import { getStorageSync, isEmpty, clearStorageSync, getBaseURL } from '../utils/util'
 
 export default function request(url: string, method: string | any = 'GET', data: any = {}, contentType: string = 'application/x-www-form-urlencoded') {
   
-  const baseURL = process.env.NODE_ENV === 'development' ? 'http://api.jiayoufabao.com/api' : 'http://api.jiayoufabao.cn/api'
+  const baseURL = getBaseURL()
 
   const getToken = () => {
     return getStorageSync('token')

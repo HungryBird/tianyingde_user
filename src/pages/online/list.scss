@@ -1,0 +1,50 @@
+@import '../../styles/variable';
+
+.list{
+  display: flex;
+  flex-direction: column;
+  .scroll-wrap{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    .taro-scroll{
+      flex: 1;
+      padding: 0 20px;
+      .block{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        border: 1PX solid $grey;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
+        background: #fff;
+        .left{
+          flex: 1;
+          .money{
+            color: $dark;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 1.5;
+          }
+          .label{
+            color: $disabled;
+            font-size: 28px;
+            line-height: 1.5;
+          }
+          .bot{
+            display: flex;
+          }
+          .primary.label{
+            color: $primary;
+          }
+        }
+        .right{
+          display: flex;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
