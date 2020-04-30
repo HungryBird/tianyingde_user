@@ -4,7 +4,7 @@ import Mixins from '../../mixins/mixin'
 import Nav from '../../components/Nav/Nav'
 import './binyi.scss'
 import { isEmpty } from '../../utils/util'
-import Button from '../../components/Button/Button'
+import Btn from '../../components/Btn/Btn'
 import cloud from '../../assets/images/common/xiangyun.png'
 import Mask from '../../components/Mask/Mask'
 import { inject, observer } from '@tarojs/mobx'
@@ -116,11 +116,11 @@ export default class Binyi extends Mixins {
               </ol>
             </View>
           </View>
-          <Button type='primary' round text='预约服务' style='margin-top: 20px;' onClick={this.yuyue.bind(this)} />
+          <Btn type='primary' round text='预约服务' style='margin-top: 20px;' onClick={this.yuyue.bind(this)} />
         </View>
         
         <Mask visible={this.state.visible} onChangeVisible={this.visibleChange.bind(this)}>
-          <View className='form-wrap'>
+          <View className='modal-form-wrap'>
             <View className='top'>
               <View className='title-wrap'>填写信息</View>
             </View>
@@ -138,7 +138,7 @@ export default class Binyi extends Mixins {
                     <Input name='mobile' value={this.state.form.mobile} type='number' placeholder='输入预约人手机号码' />
                   </View>
                 </View>
-                <Button formType='submit' text='确定' type='primary' style='margin: 30px auto;margin-bottom: 10px;width: 50%;' round />
+                <Btn formType='submit' text='确定' type='primary' style='margin: 30px auto;margin-bottom: 10px;width: 50%;' round />
               </Form>
             </View>
           </View>

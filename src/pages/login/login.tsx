@@ -52,9 +52,14 @@ export default class Index extends Component<any, any> {
       setStorageSync('openid', res.data.openid)
       infoStore.setToken(res.meta.access_token).then(() => {
         infoStore.setOpenid(res.data.openid).then(() => {
-          Taro.navigateTo({
-            url: '/pages/index/index'
-          })
+          const { redirect } = this.$router.params
+          if (isEmpty(redirect)) {
+            Taro.navigateTo({
+              url: '/pages/index/index'
+            })
+          } else {
+            Taro.navigateBack()
+          }
         })
       })
     })

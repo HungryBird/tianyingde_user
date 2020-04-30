@@ -46,7 +46,7 @@ export default class Index extends Mixins {
     })
     getCustomer().then((res: any) => {
       this.setState({
-        mobile: res.data.mobile
+        mobile: res.data.contact_mobile
       })
     })
    }

@@ -4,7 +4,7 @@ import Nav from '../../components/Nav/Nav'
 import Mixins from '../../mixins/mixin'
 import './cart.scss'
 import InputNumber from '../../components/InputNumber/InputNumber'
-import Button from '../../components/Button/button'
+import Btn from '../../components/Btn/Btn'
 import { carts } from '../../api/mall/mall'
 
 export default class Cart extends Mixins {
@@ -170,7 +170,7 @@ export default class Cart extends Mixins {
                 ￥{ this.state.total }
               </Text>
             </Text>
-            <Button text='结算' type='primary' onClick={this.settle.bind(this)} round />
+            <Btn text='结算' type='primary' onClick={this.settle.bind(this)} round />
           </View>
         </View>
       </View>

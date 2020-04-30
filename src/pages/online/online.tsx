@@ -15,7 +15,7 @@ export default class Online extends Mixins {
 
   render() {
     return(
-      <View className='main-page'>
+      <View className='page-main online'>
         
       </View>
     )

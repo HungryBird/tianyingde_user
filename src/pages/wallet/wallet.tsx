@@ -62,6 +62,18 @@ export default class GoodList extends Mixins {
     this.getLogs()
   }
 
+  filterCateId(id: number) {
+    const dict = {
+      1: '购物',
+      2: '预约服务',
+      3: '赠送礼物',
+      4: '礼金',
+      5: '提现',
+      6: '退款',
+    }
+    return dict[id]
+  }
+
   render() {
     return(
       <View className='wallet page-main'>
@@ -75,13 +87,16 @@ export default class GoodList extends Mixins {
             {
               this.state.list.data.map((item: any) => {
                 return <View className='block'>
-                  <View className='left'>
-                    <View className='money'>
-                      <Text>金额：</Text><Text className={`number ${this.state.status === 1 ? 'price' : ''}`}>{ 999 }</Text>
-                    </View>
-                    <View className='label'>讣告编号：{ item.auto_number }</View>
-                    <View className='label'>时间：{ item.created_at }</View>
+                  <View className='action'>
+                    { this.filterCateId.call(this, item.cate_id) }
                   </View>
+                  <View className='money'>
+                    <Text className='label'>金额：</Text><Text className={`number ${this.state.status === 1 ? 'price' : ''} ${item.amount > 0 ? 'price' : 'disabled'}`}>
+                      { item.amount > 0 ? '+' + item.amount : item.amount }
+                    </Text>
+                  </View>
+                  {/* <View className='label'>讣告编号：{ item.auto_number }</View> */}
+                  <View className='label'>时间：{ item.created_at }</View>
                 </View>
               })
             }

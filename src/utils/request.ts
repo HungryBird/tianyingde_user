@@ -42,7 +42,7 @@ export default function request(url: string, method: string | any = 'GET', data:
           if (status === 401 || status === 420) {
             clearStorageSync()
             Taro.navigateTo({
-              url: '/pages/login/login'
+              url: '/pages/login/login?redirect=login'
             })
           } else {
             Taro.hideLoading()

@@ -54,7 +54,8 @@ class App extends Component {
       'pages/fugao/liuyan',
       'pages/user/set',
       'pages/wallet/wallet',
-      'pages/online/list'
+      'pages/online/list',
+      'pages/fugao/add'
     ],
     window: {
       backgroundTextStyle: 'light',

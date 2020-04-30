@@ -49,7 +49,8 @@ export default class Mask extends Component<any, any> {
     visible: propTypes.Requireable<boolean>; 
     onChangeVisible: propTypes.Requireable<(...args: any[]) => any>,
     className: propTypes.Requireable<string>,
-    style: propTypes.Requireable<string>
+    style: propTypes.Requireable<string>,
+    ref: propTypes.Requireable<string>
   }
   static defaultProps: { 
     visible: false,

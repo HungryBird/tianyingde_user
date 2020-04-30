@@ -4,15 +4,18 @@ import Mixins from '../../mixins/mixin'
 import Menu from '../../components/Menu/Menu'
 import Nav from '../../components/Nav/Nav'
 import './list.scss'
-import { obituaries, accepts } from '../../api/fugao/list'
-import Button from '../../components/Button/Button'
+import { obituaries, accepts, deleteObituarie, updateAccept } from '../../api/fugao/list'
+import Btn from '../../components/Btn/Btn'
+import Modal from '../../components/Modal/Modal'
 
 export default class OnlineList extends Mixins {
   constructor(props: any) {
     super(props)
 
     this.state = {
-      type: 1,
+      id: '',
+      accept: {},
+      status: 1,
       list: {
         data: [],
         page: 1,
@@ -20,6 +23,9 @@ export default class OnlineList extends Mixins {
         size: 10,
         status: 'more',
         loading: false
+      },
+      modal: {
+        visible: false
       }
     }
   }
@@ -30,18 +36,30 @@ export default class OnlineList extends Mixins {
   }
 
   getList() {
-    const getList = this.state.type === 1 ? obituaries : accepts
+    const getList = this.state.status === 2 ?  accepts : obituaries
     getList({
+      status: this.state.status,
       page: this.state.list.page,
       size: this.state.list.size
     }).then((res: any) => {
-      this.handleDefaultList(res)
+      if (this.state.status === 2) {
+        const data = res.data.map((item: any) => {
+          for (const key in item.obituary) {
+            item[key] = item.obituary[key]
+          }
+          return item
+        })
+        res.data = data
+        this.handleDefaultList(res)
+      } else {
+        this.handleDefaultList(res)
+      }
     })
   }
 
   changeMenu(item: any) {
     this.setState({
-      type: item.id
+      status: item.id
     }, function() {
       this.initList().then(() => {
         this.getList()
@@ -50,7 +68,53 @@ export default class OnlineList extends Mixins {
   }
 
   scrollToLower() {
+    if (this.state.list.type !== 'more') return
     this.getList()
+  }
+
+  changeModalVisible(visible: boolean = true) {
+    const modal = Object.assign({}, this.state.modal, {
+      visible
+    })
+    this.setState({
+      modal
+    })
+  }
+
+  openModal(item: any, e: any) {
+    if (this.state.status === 2) {
+      this.setState({
+        accept: item
+      })
+    } else {
+      this.setState({
+        id: item.id
+      }, () => {
+        this.changeModalVisible()
+      })
+    }
+  }
+
+  confirm() {
+    const submit = this.state.status === 2 ? updateAccept : deleteObituarie
+    let data = {}
+    if (this.state.status === 2) {
+      data = Object.assign({}, this.state.accept)
+    } else {
+      data['id'] = this.state.id
+    }
+    submit(data).then((res: any) => {
+      this.initList().then(() => {
+        Taro.showToast({
+          title: res.message
+        })
+        this.getList()
+      })
+    })
+  }
+
+  clickItem(item: any) {
+    //
   }
 
   render() {
@@ -67,19 +131,19 @@ export default class OnlineList extends Mixins {
       },
       {
         text: '草稿',
-        id: 3,
+        id: 0,
         active: false
       }
     ]
     return(
-      <View className='list main-page'>
+      <View className='list page-main'>
         <Nav title='讣告' />
         <View className='scroll-wrap'>
           <Menu onChange={this.changeMenu.bind(this)} style='margin: 10px auto;' data={data} />
-          <ScrollView onScrollToLower={this.scrollToLower} scrollY>
+          <ScrollView onScrollToLower={this.scrollToLower.bind(this)} scrollY>
             {
               this.state.list.data.map((item: any) => {
-                return <View className='block'>
+                return <View className='block' onClick={this.clickItem.bind(this, item)}>
                   <View className='left'>
                     <View className='label'>讣告编号：{ item.auto_number }</View>
                     <View className='label primary'>时间：{ item.created_at }</View>
@@ -89,13 +153,19 @@ export default class OnlineList extends Mixins {
                     }
                   </View>
                   <View className='right'>
-                    <Button text={this.state.type === 2 ? '取消' : '删除'} round type='primary' size='mini' />
+                    <Btn text={this.state.status === 2 ? '取消' : '删除'} round type='primary' size='mini' onClick={this.openModal.bind(this, item)} />
                   </View>
                 </View>
               })
             }
           </ScrollView>
         </View>
+        <Modal title={this.state.status === 2 ? '确认取消' : '确认删除'} content={this.state.status === 2 ? '是否取消此赴约？' : '是否删除此讣告'} visible={this.state.modal.visible} onChange={this.changeModalVisible.bind(this)} onOk={this.confirm.bind(this)} />
+        {
+          this.state.status === 1 ? <View className='bot'>
+            <Btn text='新增' round type='primary' onClick={this.navigateTo.bind(this, '/pages/fugao/add', { action: 'add' })} />
+          </View> : null
+        }
       </View>
     )
   }

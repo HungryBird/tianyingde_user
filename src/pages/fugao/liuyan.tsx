@@ -78,16 +78,14 @@ export default class GoodList extends Mixins {
             {
               this.state.list.data.map((item: any) => {
                 return <View className='block'>
-                  <View className='left'>
-                    <Image src={item.image} mode='widthFix' />
-                  </View>
+                  <Image src={item.user.avatar} className='left' mode='widthFix' />
                   <View className='right'>
-                    <View className='name'>名字</View>
-                    <View className='name'>讣告编号：</View>
+                    <View className='label'>讣告编号：{ item.obituary.auto_number }</View>
+                    <View className='name'>{ item.user.nickname }</View>
                     <View className='content'>
-                      222
+                      { item.content }
                     </View>
-                    <View className='time'>
+                    <View className='label time'>
                       时间：{ item.created_at }
                     </View>
                   </View>

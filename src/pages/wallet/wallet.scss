@@ -20,39 +20,28 @@
       flex: 1;
       padding: 0 20px;
       .block{
-        display: flex;
-        justify-content: space-between;
         margin-bottom: 14px;
         border: 1PX solid $grey;
         border-radius: 20px;
         padding: 20px;
         box-shadow: rgba($color: #000000, $alpha: 0.3) 0px 0px 3px 1px inset;
         background: #fff;
-        .left{
-          .money{
-            color: $dark;
-            font-weight: bold;
-            font-size: 32px;
-            line-height: 1.5;
-          }
+        .action{
+          color: $dark;
+          font-weight: bold;
+          font-size: 30px;
+        }
+        .money{
+          font-size: 30px;
+          line-height: 1.5;
           .label{
             color: $disabled;
-            font-size: 28px;
-            line-height: 1.5;
           }
         }
-        .right{
-          position: relative;
-          width: 40px;
-          .taro-img{
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 40px;
-            margin: auto;
-          }
+        .label{
+          color: $disabled;
+          font-size: 28px;
+          line-height: 1.5;
         }
       }
     }

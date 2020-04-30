@@ -21,6 +21,12 @@
       text-align: right;
       font-weight: bold;
     }
+    .label.required{
+      &::before{
+        content: '*';
+        color: #f00;
+      }
+    }
     .value{
       font-size: 32px;
     }

@@ -16,6 +16,14 @@ export const obituaries = (data: any) => {
   return http('/consumer/users/obituaries', 'GET', data)
 }
 
+export const deleteObituarie = (data: any) => {
+  return http(`/consumer/obituaries/${data.id}`, 'DELETE')
+}
+
 export const accepts = (data: any) => {
-  return http('/consumer/users/obituaries/accepts', 'GET', data)
+  return http('/consumer/obituaries/accepts', 'GET', data)
+}
+
+export const updateAccept = (data: any) => {
+  return http('/consumer/obituaries/accepts', 'PUT', data)
 }

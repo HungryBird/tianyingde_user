@@ -7,7 +7,7 @@ import Img from '../../assets/images/mall/shangptu.png'
 import InputNumber from '../../components/InputNumber/InputNumber'
 import { addresses } from '../../api/addresses/addresses'
 import { addOrder, wechatpay } from '../../api/mall/mall'
-import Button from '../../components/Button/button'
+import Btn from '../../components/Btn/Btn'
 import { isEmpty } from '../../utils/util'
 import { inject, observer } from '@tarojs/mobx'
 
@@ -234,7 +234,7 @@ export default class Cart extends Mixins {
                 ￥{ this.state.total }
               </Text>
             </Text>
-            <Button text='提交订单' type='primary' onClick={this.settle.bind(this)} round />
+            <Btn text='提交订单' type='primary' onClick={this.settle.bind(this)} round />
           </View>
         </View>
       </View>

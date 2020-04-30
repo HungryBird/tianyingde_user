@@ -7,7 +7,7 @@ import bgImg from '../../assets/images/mine/ditubeij.png'
 import { addresses, addAddress, updateAddress } from '../../api/addresses/addresses'
 import { isEmpty } from '../../utils/util'
 import TaroRegionPicker from '../../components/taro-region-picker'
-import Button from '../../components/Button/Button'
+import Btn from '../../components/Btn/Btn'
 
 export default class Address extends Mixins {
   constructor(props: any) {
@@ -47,11 +47,17 @@ export default class Address extends Mixins {
     this.getAddresses()
   }
 
-  onGetRegion(e: any) {
-    console.log('e: ', e)
+  onGetRegion(region: string) {
+    const address = Object.assign({}, this.state.address, {
+      region
+    })
+    this.setState({
+      address
+    })
   }
 
   save(e: any) {
+    console.log('e save: ', e)
     const submit = isEmpty(this.state.address) ? addAddress : updateAddress
     const value = e.detail.value
     const _value = {}
@@ -90,15 +96,15 @@ export default class Address extends Mixins {
           </View>
           <View className='form-item'>
             <Text className='label'>收货地址</Text>
-            <Input value={this.state.address.full_address} name='full_address' style='display: none;' />
-            <TaroRegionPicker onGetRegion={this.onGetRegion.bind(this)} region={this.state.address.full_address} />
+            <Input value={this.state.address.region} name='region' style='display: none;' />
+            <TaroRegionPicker onGetRegion={this.onGetRegion.bind(this)} region={this.state.address.region} />
           </View>
           <View className='form-item'>
             <Text className='label'>详细地址</Text>
             <Input name='address' value={this.state.address.address} />
           </View>
           <View style='width: 100%;text-align: center;margin-top: 40px;'>
-            <Button text='保存' type='primary' round formType='submit' />
+            <Btn text='保存' type='primary' round formType='submit' />
           </View>
         </Form>
         <Image mode='aspectFill' src={bgImg} className='bg-image' />

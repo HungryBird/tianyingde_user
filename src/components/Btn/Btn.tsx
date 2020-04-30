@@ -1,10 +1,11 @@
 import Taro from '@tarojs/taro'
 import { View, Button } from '@tarojs/components'
 import propTypes from 'prop-types'
-import './button.scss'
+import './btn.scss'
 
 export default function CButton(props: any) {
-  function click() {
+  function click(e: any) {
+    e.stopPropagation()
     props.onClick()
   }
 

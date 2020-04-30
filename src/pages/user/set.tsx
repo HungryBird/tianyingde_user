@@ -4,7 +4,7 @@ import { inject, observer } from '@tarojs/mobx'
 import Mixins from '../../mixins/mixin'
 import Nav from '../../components/Nav/Nav'
 import bgImg from '../../assets/images/mine/ditubeij.png'
-import Button from '../../components/Button/Button'
+import Btn from '../../components/Btn/Btn'
 import { userInfo, userSave } from '../../api/user/user'
 import { upload } from '../../api/other/upload'
 import { addresses } from '../../api/addresses/addresses'
@@ -107,7 +107,7 @@ export default class GoodList extends Mixins {
             </View>
           </View>
           <View style='width: 100%;text-align: center;margin-top: 40px;'>
-            <Button formType='submit' text='保存' type='primary' round />
+            <Btn formType='submit' text='保存' type='primary' round />
           </View>
         </Form>
         <Image mode='widthFix' src={bgImg} className='bg-img' />

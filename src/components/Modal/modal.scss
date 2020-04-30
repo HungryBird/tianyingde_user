@@ -1,0 +1,49 @@
+@import '../../styles/variable';
+
+.modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  .top{
+    position: relative;
+    height: 40PX;
+    width: 100%;
+    background-image: url(../../assets/images/common/xiangyunkuang.png);
+    background-size: 100%;
+    background-position: center center;
+    border: 1PX solid $dark;
+    .title-wrap{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 40px;
+      font-size: 36px;
+      font-weight: bold;
+      color: $yellow;
+      text-shadow:  #000 1PX 0 0, #000 0 1PX 0, #000 -1PX 0 0, #000 0 -1PX 0;
+    }
+  }
+  .content{
+    text-align: center;
+    padding: 40px;
+    color: $dark;
+    font-size: 30px;
+  }
+  .modal-bot{
+    padding: 0 40px 40px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .button{
+      &:first-child{
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

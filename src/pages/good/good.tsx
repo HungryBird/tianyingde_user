@@ -2,10 +2,10 @@ import Taro, { Config } from '@tarojs/taro'
 import { View, Text, Image, RichText } from '@tarojs/components'
 import Mixins from '../../mixins/mixin'
 import NavBar from '../../components/Nav/Nav'
-import { good, addToCart, addOrder, carts } from '../../api/mall/mall'
+import { good, addToCart, carts } from '../../api/mall/mall'
 import { addresses } from '../../api/addresses/addresses'
 import CartIcon from '../../components/CartIcon/CartIcon'
-import Button from '../../components/Button/Button'
+import Btn from '../../components/Btn/Btn'
 import Mask from '../../components/Mask/Mask'
 import InputNumber from '../../components/InputNumber/InputNumber'
 import './good.scss'
@@ -176,8 +176,8 @@ export default class Good extends Mixins {
             <RichText nodes={this.state.content.detail}></RichText>
           </View>
           <View className='bottom'>
-            <Button text='加入购物车' onClick={this.addCart.bind(this)}  round />
-            <Button text='购买' type='primary' onClick={this.toBuy.bind(this)} round />
+            <Btn text='加入购物车' onClick={this.addCart.bind(this)}  round />
+            <Btn text='购买' type='primary' onClick={this.toBuy.bind(this)} round />
           </View>
           {/* 遮罩层 */}
           <Mask visible={this.state.buy.visible} onChangeVisible={this.changeVisible.bind(this)}>
@@ -226,7 +226,7 @@ export default class Good extends Mixins {
                   </View>
                   <InputNumber min={1} value={this.state.buy.form.num} onChangeNumber={this.changeNumber.bind(this)} />
                 </View>
-                <Button text='确定' type='primary' round onClick={this.confirm.bind(this)} />
+                <Btn text='确定' type='primary' round onClick={this.confirm.bind(this)} />
               </View>
             </View>
           </Mask>
