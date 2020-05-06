@@ -7,19 +7,26 @@
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
+    .label{
+      text-align: right;
+    }
+    input{
+      flex: 1;
+    }
   }
   .form-item{
     padding: 10px 0;
     .label{
-      display: inline-block;
       min-width: 120px;
       white-space: nowrap;
       padding-right: 20px;
       color: $dark;
       font-size: 32px;
       text-align: justify;
-      text-align: right;
       font-weight: bold;
+    }
+    .remark{
+      color: $disabled;
     }
     .label.required{
       &::before{
@@ -30,6 +37,12 @@
     .value{
       font-size: 32px;
     }
+    textarea{
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      height: 200px;
+    }
   }
 }
 .form-wrap.border{
@@ -38,5 +51,8 @@
     &:last-child{
       border: none;
     }
+  }
+  .no-border.form-item{
+    border: none;
   }
 }
