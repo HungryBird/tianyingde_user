@@ -27,3 +27,12 @@ export const accepts = (data: any) => {
 export const updateAccept = (data: any) => {
   return http('/consumer/obituaries/accepts', 'PUT', data)
 }
+
+export const addObituarie = (data: any) => {
+  return http('/consumer/obituaries', 'POST', data)
+}
+
+export const updateObituarie = (data: any) => {
+  const id = data.id
+  return http(`/consumer/obituaries/${id}`, 'PUT', data)
+}

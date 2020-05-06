@@ -9,6 +9,10 @@ ul,ol{
     list-style-position:inside
   }
 }
+.hide{
+  display: none;
+  visibility: hidden;
+}
 
 .page-title{
   z-index: 1;

@@ -35,13 +35,21 @@ export default class OnlineList extends Mixins {
     navigationBarTitleText: '在线讣告'
   }
 
+  componentDidShow() {
+    this.getList()
+  }
+
   getList() {
     const getList = this.state.status === 2 ?  accepts : obituaries
-    getList({
+    const obj = this.state.status === 2 ?  {
+      page: this.state.list.page,
+      size: this.state.list.size
+    } : {
       status: this.state.status,
       page: this.state.list.page,
       size: this.state.list.size
-    }).then((res: any) => {
+    }
+    getList(obj).then((res: any) => {
       if (this.state.status === 2) {
         const data = res.data.map((item: any) => {
           for (const key in item.obituary) {
@@ -114,7 +122,11 @@ export default class OnlineList extends Mixins {
   }
 
   clickItem(item: any) {
-    //
+    if (item.is_publish === 1) {
+
+    } else if (item.is_publish === 0) {
+      this.navigateTo('/pages/fugao/add', {action: 'edit', ...item})
+    }
   }
 
   render() {

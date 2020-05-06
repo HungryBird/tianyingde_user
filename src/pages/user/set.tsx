@@ -9,7 +9,7 @@ import { userInfo, userSave } from '../../api/user/user'
 import { upload } from '../../api/other/upload'
 import { addresses } from '../../api/addresses/addresses'
 import './set.scss'
-import { isEmpty } from 'src/utils/util'
+import { isEmpty } from '../../utils/util'
 import Arrow from '../../assets/images/common/arrow.png'
 
 @inject('infoStore')
@@ -58,9 +58,12 @@ export default class GoodList extends Mixins {
       success(res: any) {
         const avatar = res.tempFilePaths[0]
         upload(avatar).then((res: any) => {
-          const user = Object.assign({}, self.state.user, {avatar: res.data.image_url})
+          const data = JSON.parse(res.data)
+          const user = Object.assign({}, self.state.user, {avatar: data.data.image_url})
           self.setState({
             user
+          }, function() {
+            console.log('state: ', this.state)
           })
         }).catch(() => {
           Taro.showToast({
@@ -75,10 +78,18 @@ export default class GoodList extends Mixins {
   save(e: any) {
     const form = e.detail.value
     for (const key in form) {
-      if (key) {
-
+      if (isEmpty(form[key])) {
+        Taro.showToast({
+          title: '请输入必填项'
+        })
+        return
       }
     }
+    userSave(form).then((res: any) => {
+      Taro.showToast({
+        title: res.message
+      })
+    })
   }
 
   render() {

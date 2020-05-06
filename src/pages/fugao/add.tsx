@@ -1,8 +1,9 @@
 import Taro, {Config} from '@tarojs/taro'
 import Mixins from '../../mixins/mixin'
-import { View, Form, Image, Input, Text, Picker, RadioGroup, Radio, Textarea } from '@tarojs/components'
+import { View, Form, Image, Input, Text, Picker, RadioGroup, Radio, Textarea, Label } from '@tarojs/components'
 import { isEmpty } from '../../utils/util'
 import { upload } from '../../api/other/upload'
+import { addObituarie, updateObituarie } from '../../api/fugao/list'
 import Nav from '../../components/Nav/Nav'
 import Btn from '../../components/Btn/Btn'
 import M1 from '../../assets/images/fugao/muban1.png'
@@ -37,14 +38,14 @@ export default class FugaoAdd extends Mixins {
 
     this.state = {
       title: '讣告新增',
+      type: '',
       form: {
-        salutation: '',
-        deceased_name: '',
         gender: '1',
-        birth_date: '',
-        death_date: '',
         template_platform_id: '1',
-        deceased_picture: ''
+        deceased_name: '',
+        death_date: '',
+        principal_name: '',
+        principal_telephone: ''
       }
     }
   }
@@ -52,8 +53,18 @@ export default class FugaoAdd extends Mixins {
   componentWillMount() {
     const { action } = this.$router.params
     const title = action === 'add' ? '讣告新增' : '讣告编辑'
+    if (action === 'edit') {
+      this.setState({
+        form: this.$router.params
+      }, function() {
+        console.log('state: ', this.state)
+      })
+    }
     this.setState({
-      title
+      title,
+      action
+    }, function() {
+      console.log('state: ', this.state)
     })
     Taro.setNavigationBarTitle({
       title
@@ -65,11 +76,36 @@ export default class FugaoAdd extends Mixins {
     navigationBarTitleText: '讣告编辑'
   }
 
-  submit() {
-    //
+  submit(is_public: number) {
+    const form = Object.assign({}, this.state.form, { is_public })
+    for (const key in form) {
+      if ((key === 'principal_name' || key === 'principal_telephone' || key === 'death_date' || key === 'deceased_name') && isEmpty(form[key])) {
+        Taro.showToast({
+          icon: 'none',
+          title: '请输入必填项'
+        })
+        return
+      }
+    }
+    const submit  = this.state.action === 'add' ? addObituarie : updateObituarie
+    submit(form).then((res: any) => {
+      Taro.showToast({
+        title: res.message
+      })
+      setTimeout(() => {
+        Taro.navigateTo({
+          url: '/pages/online/list'
+        })
+      }, 1500)
+    }).catch((res: any) => {
+      Taro.showToast({
+        title: res.message
+      })
+    })
   }
 
   changeSex(...args: any[]) {
+    if (isEmpty(args[1])) return
     const index = args[1]
     const gender = sexs.filter((item: any, i: number) => {
       return index === i
@@ -88,6 +124,22 @@ export default class FugaoAdd extends Mixins {
     })
   }
 
+  changDeath(e: any) {
+    const death_date = e.detail.value
+    const form = Object.assign({}, this.state.form, { death_date })
+    this.setState({
+      form
+    })
+  }
+
+  changeMt(e: any) {
+    const memorial_service_time = e.detail.value
+    const form = Object.assign({}, this.state.form, { memorial_service_time })
+    this.setState({
+      form
+    })
+  }
+
   changeMoban(template_platform_id: string) {
     const form = Object.assign({}, this.state.form, { template_platform_id })
     this.setState({
@@ -101,9 +153,12 @@ export default class FugaoAdd extends Mixins {
       success(res: any) {
         const avatar = res.tempFilePaths[0]
         upload(avatar).then((res: any) => {
-          const user = Object.assign({}, self.state.user, {avatar: res.data.image_url})
+          const data = JSON.parse(res.data)
+          const form = Object.assign({}, self.state.form, {deceased_picture: data.data.image_url})
           self.setState({
-            user
+            form
+          }, function() {
+            console.log('form: ', self.state)
           })
         }).catch(() => {
           Taro.showToast({
@@ -115,31 +170,51 @@ export default class FugaoAdd extends Mixins {
     })
   }
 
+  changeInput(key: string, e: any) {
+    const value = e.detail.value
+    const obj = {}
+    obj[key] = value
+    const form = Object.assign({}, this.state.form, obj)
+    this.setState({
+      form
+    }, function() {
+      console.log('changeInput: ', this.state)
+    })
+  }
+
+  changeTemplate() {
+    //
+  }
+
   render() {
     return <View className='page-main add'>
       <Nav title={this.state.title} />
-      <Form onSubmit={this.submit.bind(this)} className='form-wrap border'>
+      <Form className='form-wrap border'>
         <View className='content'>
           <View className='form-item inline'>
             <Text className='label'>
               称谓
             </Text>
-            <Input placeholder='请输入称谓' value={this.state.form.salutation} />
+            <Input placeholder='请输入称谓' name='salutation' value={this.state.form.salutation} onBlur={this.changeInput.bind(this, 'salutation')} />
           </View>
           <View className='form-item inline'>
             <Text className='label required'>
               逝者姓名
             </Text>
-            <Input placeholder='请输入逝者姓名' value={this.state.form.deceased_name} />
+            <Input placeholder='请输入逝者姓名' name='deceased_name' value={this.state.form.deceased_name} onBlur={this.changeInput.bind(this, 'deceased_name')} />
           </View>
           <View className='form-item inline'>
             <Text className='label'>
               性别
             </Text>
-            <RadioGroup style='display: flex;' onChange={this.changeSex.bind(this)}>
+            <RadioGroup style='display: flex;' onChange={this.changeSex.bind(this)} name='gender'>
               {
                 sexs.map((item: any) => {
-                  return <Radio checked={item.value === this.state.form.gender} key={item.value} value={item.value}>{item.text}</Radio>
+                  return (
+                    <View key={item.value}>
+                      <Radio checked={item.value === this.state.form.gender} value={item.value}>{item.text}</Radio>
+                    </View>
+                  )
                 })
               }
             </RadioGroup>
@@ -149,84 +224,90 @@ export default class FugaoAdd extends Mixins {
               出生日期
             </Text>
             <Picker mode='date' onChange={this.changBirth.bind(this)} value={this.state.form.birth_date}>
-              <Input placeholder='请选择日期' value={this.state.form.birth_date} />
+              <Input name='birth_date' placeholder='请选择日期' value={this.state.form.birth_date} />
             </Picker>
           </View>
           <View className='form-item inline'>
             <Text className='label required'>
               逝世日期
             </Text>
-            <Picker mode='date' onChange={this.changBirth.bind(this)} value={this.state.form.death_date}>
-              <Input placeholder='请选择日期' value={this.state.form.death_date} />
+            <Picker mode='date' onChange={this.changDeath.bind(this)} value={this.state.form.death_date}>
+              <Input name='death_date' placeholder='请选择日期' value={this.state.form.death_date} />
             </Picker>
           </View>
           <View className='form-item inline'>
             <Text className='label'>
               寿数说明
             </Text>
-            <Input placeholder='请输入寿数说明' value={this.state.form.life_number_descr} />
+            <Input name='life_number_descr' placeholder='请输入寿数说明' value={this.state.form.life_number_descr} onBlur={this.changeInput.bind(this, 'life_number_descr')} />
           </View>
           <View className='form-item inline'>
             <Text className='label'>
               灵堂位置
             </Text>
-            <Input placeholder='请输入灵堂位置' value={this.state.form.life_number_descr} />
+            <Input placeholder='请输入灵堂位置' name='spirit_hall_location' value={this.state.form.spirit_hall_location} onBlur={this.changeInput.bind(this, 'spirit_hall_location')} />
           </View>
           <View className='form-item inline'>
             <Text className='label'>
               追悼会时间
             </Text>
-            <Picker mode='date' onChange={this.changBirth.bind(this)} value={this.state.form.death_date}>
-              <Input placeholder='请选择日期' value={this.state.form.death_date} />
+            <Picker mode='date' onChange={this.changeMt.bind(this)} value={this.state.form.memorial_service_time}>
+              <Input name='memorial_service_time' placeholder='请选择日期' value={this.state.form.memorial_service_time} />
             </Picker>
+          </View>
+          <View className='form-item inline'>
+            <Text className='label'>
+              追悼会地点
+            </Text>
+            <Input name='memorial_place' placeholder='请输入追悼会地点' value={this.state.form.memorial_place} onBlur={this.changeInput.bind(this, 'memorial_place')} />
           </View>
           <View className='form-item inline'>
             <Text className='label'>
               主事人称谓
             </Text>
-            <Input placeholder='请输入主事人称谓' value={this.state.form.life_number_descr} />
+            <Input name='subject_title' placeholder='请输入主事人称谓' value={this.state.form.subject_title} onBlur={this.changeInput.bind(this, 'subject_title')} />
           </View>
           <View className='form-item inline'>
             <Text className='label required'>
               主事人姓名
             </Text>
-            <Input placeholder='请输入主事人姓名' value={this.state.form.life_number_descr} />
+            <Input name='principal_name' placeholder='请输入主事人姓名' value={this.state.form.principal_name} onBlur={this.changeInput.bind(this, 'principal_name')} />
           </View>
           <View className='form-item inline'>
             <Text className='label required'>
               主事人电话
             </Text>
-            <Input placeholder='请输入主事人电话' value={this.state.form.life_number_descr} />
+            <Input name='principal_telephone' placeholder='请输入主事人电话' value={this.state.form.principal_telephone} onBlur={this.changeInput.bind(this, 'principal_telephone')} />
           </View>
           <View className='form-item inline'>
-            <Text className='label required'>
+            <Text className='label'>
               治丧管家姓名
             </Text>
-            <Input placeholder='请输入治丧管家姓名' value={this.state.form.life_number_descr} />
+            <Input name='funeral_steward_name' placeholder='请输入治丧管家姓名' value={this.state.form.funeral_steward_name} onBlur={this.changeInput.bind(this, 'funeral_steward_name')} />
           </View>
           <View className='form-item inline'>
-            <Text className='label required'>
+            <Text className='label'>
               治丧管家电话
             </Text>
-            <Input placeholder='请输入治丧管家电话' value={this.state.form.life_number_descr} />
+            <Input name='funeral_housekeeper_phone' placeholder='请输入治丧管家电话' value={this.state.form.funeral_housekeeper_phone} onBlur={this.changeInput.bind(this, 'funeral_housekeeper_phone')} />
           </View>
           <View className='form-item no-border'>
             <Text className='label'>
               讣告备注
             </Text>
-            <Textarea placeholder='请输入讣告备注' value={this.state.form.life_number_descr} maxlength={200} />
+            <Textarea name='obituary_notes' placeholder='请输入讣告备注' value={this.state.form.obituary_notes} maxlength={200} onBlur={this.changeInput.bind(this, 'obituary_notes')} />
           </View>
           <View className='form-item no-border'>
             <Text className='label'>
               讣告模板
             </Text>
             <Text className='label remark'>(请选择讣告模板)</Text>
-            <RadioGroup className='template-wrap'>
+            <RadioGroup className='template-wrap' name='template_platform_id' onChange={this.changeTemplate.bind(this)}>
               {
                 mobans.map((item: any) => {
-                  return <View className='moban' onClick={this.changeMoban.bind(this, item.value)}>
+                  return <View className='moban' onClick={this.changeMoban.bind(this, item.value)} key={item.value}>
                     <Image src={item.src} mode='aspectFit' />
-                    <Radio value={item.value} key={item.value} checked={this.state.form.template_platform_id === item.value} />
+                    <Radio checked={this.state.form.template_platform_id === item.value} value={item.value} id={'mb' + item.value} />
                   </View>
                 })
               }
@@ -236,12 +317,15 @@ export default class FugaoAdd extends Mixins {
             <Text className='label'>
               请选择逝者图片
             </Text>
-            <Image onClick={this.chooseImg.bind(this)} src={isEmpty(this.state.form.deceased_picture) ? Upload : this.state.form.deceased_picture} mode='widthFix' className='upload' />
+            <Input name='deceased_picture' className='hide' value={this.state.form.deceased_picture} />
+            {
+              isEmpty(this.state.form.deceased_picture) ? <Image onClick={this.chooseImg.bind(this)} src={Upload} mode='widthFix' className='upload' /> : <Image onClick={this.chooseImg.bind(this)} src={this.state.form.deceased_picture} mode='widthFix' className='upload' />
+            }
           </View>
         </View>
         <View className='bot'>
-          <Btn text='保存草稿' formType='submit' round />
-          <Btn text='发布' type='primary' formType='submit' round />
+          <Btn text='保存草稿' formType='submit' onClick={this.submit.bind(this, 0)} round />
+          <Btn text='发布' type='primary' formType='submit' onClick={this.submit.bind(this, 1)} round />
         </View>
       </Form>
     </View>
