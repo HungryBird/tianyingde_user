@@ -2,6 +2,10 @@ import { Component } from '@tarojs/taro'
 import { getType } from '../utils/util'
 
 export default class Mixins extends Component<any, any>{
+  // 返回
+  goback() {
+    Taro.navigateBack()
+  }
   // 跳转页面
   navigateTo(url: string, query: any = {}) {
     if (getType(query) !== 'mouseEvent') {

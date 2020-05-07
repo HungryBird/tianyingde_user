@@ -1,9 +1,10 @@
 import Taro, {Config} from '@tarojs/taro'
 import Mixins from '../../mixins/mixin'
-import { View, Form, Image, Input, Text, Picker, RadioGroup, Radio, Textarea, Label } from '@tarojs/components'
+import { View, Form, Image, Input, Text, Picker, RadioGroup, Radio, Textarea } from '@tarojs/components'
 import { isEmpty } from '../../utils/util'
 import { upload } from '../../api/other/upload'
 import { addObituarie, updateObituarie } from '../../api/fugao/list'
+import reg from '../../utils/reg'
 import Nav from '../../components/Nav/Nav'
 import Btn from '../../components/Btn/Btn'
 import M1 from '../../assets/images/fugao/muban1.png'
@@ -46,7 +47,9 @@ export default class FugaoAdd extends Mixins {
         death_date: '',
         principal_name: '',
         principal_telephone: ''
-      }
+      },
+      memorial_service_date: '',
+      memorial_service_time: ''
     }
   }
 
@@ -54,10 +57,18 @@ export default class FugaoAdd extends Mixins {
     const { action } = this.$router.params
     const title = action === 'add' ? '讣告新增' : '讣告编辑'
     if (action === 'edit') {
+      const { memorial_service_time } = this.$router.params
+      if (!isEmpty(memorial_service_time)) {
+        const arr = memorial_service_time.split(' ')
+        const date = arr[0]
+        const time = arr[1]
+        this.setState({
+          memorial_service_date: date,
+          memorial_service_time: time
+        })
+      }
       this.setState({
         form: this.$router.params
-      }, function() {
-        console.log('state: ', this.state)
       })
     }
     this.setState({
@@ -76,13 +87,20 @@ export default class FugaoAdd extends Mixins {
     navigationBarTitleText: '讣告编辑'
   }
 
-  submit(is_public: number) {
-    const form = Object.assign({}, this.state.form, { is_public })
+  submit(is_publish: number) {
+    const form = Object.assign({}, this.state.form, { is_publish })
     for (const key in form) {
       if ((key === 'principal_name' || key === 'principal_telephone' || key === 'death_date' || key === 'deceased_name') && isEmpty(form[key])) {
         Taro.showToast({
           icon: 'none',
           title: '请输入必填项'
+        })
+        return
+      }
+      if ((key === 'principal_telephone' || key === 'funeral_housekeeper_phone') && !reg.mobile.test(form[key])) {
+        Taro.showToast({
+          icon: 'none',
+          title: '请输入正确格式的电话号码'
         })
         return
       }
@@ -136,6 +154,36 @@ export default class FugaoAdd extends Mixins {
     const memorial_service_time = e.detail.value
     const form = Object.assign({}, this.state.form, { memorial_service_time })
     this.setState({
+      form
+    })
+  }
+
+  changeZDHDate(e: any) {
+    const memorial_service_date = e.detail.value
+    if (isEmpty(this.state.memorial_service_time)) {
+      const time = '0:0:0'
+      const memorial_service_time = `${memorial_service_date} ${time}`
+      const form = Object.assign({}, this.state.form, {
+        memorial_service_time
+      })
+      this.setState({
+        memorial_service_time,
+        form
+      })
+    }
+    this.setState({
+      memorial_service_date
+    })
+  }
+
+  changeZDHTime(e: any) {
+    const time = e.detail.value
+    const memorial_service_time = `${this.state.memorial_service_date} ${time}`
+    const form = Object.assign({}, this.state.form, {
+      memorial_service_time
+    })
+    this.setState({
+      memorial_service_time: time,
       form
     })
   }
@@ -249,10 +297,18 @@ export default class FugaoAdd extends Mixins {
           </View>
           <View className='form-item inline'>
             <Text className='label'>
+              追悼会日期
+            </Text>
+            <Picker mode='date' onChange={this.changeZDHDate.bind(this)} value={this.state.memorial_service_date}>
+              <Input name='memorial_service_date' placeholder='请选择追悼会日期' value={this.state.memorial_service_date} />
+            </Picker>
+          </View>
+          <View className='form-item inline'>
+            <Text className='label'>
               追悼会时间
             </Text>
-            <Picker mode='date' onChange={this.changeMt.bind(this)} value={this.state.form.memorial_service_time}>
-              <Input name='memorial_service_time' placeholder='请选择日期' value={this.state.form.memorial_service_time} />
+            <Picker mode='time' disabled={isEmpty(this.state.memorial_service_date)} onChange={this.changeZDHTime.bind(this)} value={this.state.memorial_service_time}>
+              <Input name='memorial_service_time' disabled={isEmpty(this.state.memorial_service_date)} placeholder='请选择追悼会时间' value={this.state.memorial_service_time} />
             </Picker>
           </View>
           <View className='form-item inline'>
@@ -324,8 +380,8 @@ export default class FugaoAdd extends Mixins {
           </View>
         </View>
         <View className='bot'>
-          <Btn text='保存草稿' formType='submit' onClick={this.submit.bind(this, 0)} round />
-          <Btn text='发布' type='primary' formType='submit' onClick={this.submit.bind(this, 1)} round />
+          <Btn text='保存草稿' onClick={this.submit.bind(this, 0)} round />
+          <Btn text='发布' type='primary' onClick={this.submit.bind(this, 1)} round />
         </View>
       </Form>
     </View>

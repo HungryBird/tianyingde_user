@@ -66,6 +66,7 @@ export default class OnlineList extends Mixins {
   }
 
   changeMenu(item: any) {
+    if (this.state.status === item.id) return
     this.setState({
       status: item.id
     }, function() {
@@ -123,7 +124,7 @@ export default class OnlineList extends Mixins {
 
   clickItem(item: any) {
     if (item.is_publish === 1) {
-
+      this.navigateTo('/pages/fugao_service/index', item)
     } else if (item.is_publish === 0) {
       this.navigateTo('/pages/fugao/add', {action: 'edit', ...item})
     }
@@ -173,11 +174,9 @@ export default class OnlineList extends Mixins {
           </ScrollView>
         </View>
         <Modal title={this.state.status === 2 ? '确认取消' : '确认删除'} content={this.state.status === 2 ? '是否取消此赴约？' : '是否删除此讣告'} visible={this.state.modal.visible} onChange={this.changeModalVisible.bind(this)} onOk={this.confirm.bind(this)} />
-        {
-          this.state.status === 1 ? <View className='bot'>
-            <Btn text='新增' round type='primary' onClick={this.navigateTo.bind(this, '/pages/fugao/add', { action: 'add' })} />
-          </View> : null
-        }
+        <View className='bot'>
+          <Btn text='新增' round type='primary' onClick={this.navigateTo.bind(this, '/pages/fugao/add', { action: 'add' })} />
+        </View>
       </View>
     )
   }

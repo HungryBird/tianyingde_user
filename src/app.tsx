@@ -55,7 +55,8 @@ class App extends Component {
       'pages/user/set',
       'pages/wallet/wallet',
       'pages/online/list',
-      'pages/fugao/add'
+      'pages/fugao/add',
+      'pages/fugao_service/index'
     ],
     window: {
       backgroundTextStyle: 'light',
