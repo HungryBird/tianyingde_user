@@ -111,9 +111,7 @@ export default class FugaoAdd extends Mixins {
         title: res.message
       })
       setTimeout(() => {
-        Taro.navigateTo({
-          url: '/pages/online/list'
-        })
+        Taro.navigateBack()
       }, 1500)
     }).catch((res: any) => {
       Taro.showToast({

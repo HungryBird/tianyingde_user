@@ -124,9 +124,11 @@ export default class OnlineList extends Mixins {
 
   clickItem(item: any) {
     if (item.is_publish === 1) {
-      this.navigateTo('/pages/fugao_service/index', item)
+      this.navigateTo('/pages/fugao_service/index', { action: 'see', ...item})
     } else if (item.is_publish === 0) {
       this.navigateTo('/pages/fugao/add', {action: 'edit', ...item})
+    } else {
+      this.navigateTo('/pages/fugao_service/index', { action: 'fuyue', ...item})
     }
   }
 

@@ -1,3 +1,5 @@
+@import '../../styles/variable';
+
 .page-main{
   .bg{
     position: fixed;
@@ -27,10 +29,43 @@
       width: 80%;
       margin: 0 auto;
       padding: 20px 40px;
+      text-align: center;
+      .title{
+        padding: 20px 40px;
+        background-image: url(../../assets/images/common/erjibiaotikuang.png);
+        background-size: 100% 100%;
+        background-position: center center;
+        font-size: 32px;
+      }
+      .deceased-picture{
+        width: 240px;
+      }
+      .position{
+        margin: 60px auto;
+        .place{
+          .taro-img{
+            width: 30px;
+            vertical-align: bottom;
+          }
+          color: $dark;
+        }
+      }
+      
     }
     .inner.bg2{
       background-color: rgba($color: #000000, $alpha: 0.5);
       color: #fff;
+      .position{
+        .place{
+          color: $yellow;
+        }
+      }
     }
+  }
+  .bot{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background: rgba($color: #bee6e6, $alpha: 0.5);
   }
 }

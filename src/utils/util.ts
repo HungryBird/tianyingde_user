@@ -110,5 +110,15 @@ export const getType = (data: any) => {
 }
 
 export const getBaseURL = () => {
-  return process.env.NODE_ENV === 'development' ? 'http://api.jiayoufabao.com/api' : 'http://api.jiayoufabao.cn/api'
+  return process.env.NODE_ENV === 'development' ? 'http://tianyinde.com/api' : 'http://tianyinde.com/api'
+}
+
+export const getBirthSlot = (begin: any, end: any) => {
+  const birthDay: any = new Date(begin)
+  const nowDate: any = new Date(end)
+  const date1 = Date.parse(birthDay)
+  const date2 = Date.parse(nowDate)
+  const day = Math.ceil((date2 - date1) / (60 * 60 * 1000 * 24))
+  const year = Math.floor(day / 365)
+  return year
 }

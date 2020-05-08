@@ -36,3 +36,8 @@ export const updateObituarie = (data: any) => {
   const id = data.id
   return http(`/consumer/obituaries/${id}`, 'PUT', data)
 }
+
+export const getFugao = (data: any) => {
+  const id = data.id
+  return http(`/consumer/obituaries/${id}`, 'GET')
+}
